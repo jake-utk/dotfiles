@@ -107,3 +107,4 @@ alias myip="curl http://ipecho.net/plain; echo"
 #alias vpn:up="protonvpn-cli connect -f"
 #alias vpn:down="protonvpn-cli disconnect"
 #alias sandbox="code ~/dev/sandbox"
+dotfiles='/usr/bin/git --git-dir=/home/jake/.dotfiles/ --work-tree=/home/jake'
