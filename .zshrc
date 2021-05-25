@@ -70,7 +70,11 @@ ZSH_THEME="agnoster"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git zsh-autosuggestions)
+
+source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+plugins=(git)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -107,4 +111,4 @@ alias myip="curl http://ipecho.net/plain; echo"
 #alias vpn:up="protonvpn-cli connect -f"
 #alias vpn:down="protonvpn-cli disconnect"
 #alias sandbox="code ~/dev/sandbox"
-dotfiles='/usr/bin/git --git-dir=/home/jake/.dotfiles/ --work-tree=/home/jake'
+alias dotfiles='/usr/bin/git --git-dir=/home/jake/.dotfiles/ --work-tree=/home/jake'
