@@ -1,5 +1,5 @@
 # If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:/usr/local/bin:$PATH
+export PATH=$HOME/bin:/usr/local/bin:$HOME/.local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
 export ZSH="/home/jake/.oh-my-zsh"
@@ -110,6 +110,6 @@ alias myip="curl http://ipecho.net/plain; echo"
 #alias vpn:status="protonvpn-cli s"
 #alias vpn:up="protonvpn-cli connect -f"
 #alias vpn:down="protonvpn-cli disconnect"
-#alias sandbox="code ~/dev/sandbox"
+alias sandbox="code ~/dev/sandbox"
 alias dotfiles='/usr/bin/git --git-dir=/home/jake/.dotfiles/ --work-tree=/home/jake'
 alias nosleep='systemd-inhibit tty-clock'
