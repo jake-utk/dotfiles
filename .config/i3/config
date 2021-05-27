@@ -200,8 +200,8 @@ bindsym $mod+r mode "resize"
 #
 
 #exec --no-startup-id ~/.config/polybar/launch.sh &
-exec --no-startup-id picom -d &
 exec --no-startup-id dunst &
+exec --no-startup-id picom -b --config /home/jake/.config/picom/picom.conf --experimental-backends &
 exec --no-startup-id nitrogen --restore &
 #exec --no-startup-id ~/scripts/wallpaper-time.sh & 
 #exec --no-startup-id nm-applet
