@@ -112,3 +112,4 @@ alias myip="curl http://ipecho.net/plain; echo"
 #alias vpn:down="protonvpn-cli disconnect"
 #alias sandbox="code ~/dev/sandbox"
 alias dotfiles='/usr/bin/git --git-dir=/home/jake/.dotfiles/ --work-tree=/home/jake'
+alias nosleep='systemd-inhibit tty-clock'
