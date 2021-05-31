@@ -17,6 +17,10 @@ gaps outer 15
 gaps inner 25
 gaps bottom 15
 
+# Removing Titlebars
+#new_window 1pixel
+#for_window [...] border normal
+
 # Notifications
 for_window [window_type="notification"] floating enable, border none
 for_window [class="Lxpolkit"] sticky enable
@@ -44,7 +48,7 @@ font pango:monospace 8
 
 # xss-lock grabs a logind suspend inhibit lock and will use i3lock to lock the
 # screen before suspend. Use loginctl lock-session to lock your screen.
-exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
+exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock -i ~/Documents/notes/wallpapers/firewatch/pink-wide.png --nofork
 
 # NetworkManager is the most popular way to manage wireless networks on Linux,
 # and nm-applet is a desktop environment-independent system tray GUI for it.
