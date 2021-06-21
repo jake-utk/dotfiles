@@ -203,7 +203,8 @@ bindsym $mod+r mode "resize"
 # Autostart programs
 #
 
-#exec --no-startup-id ~/.config/polybar/launch.sh &
+exec --no-startup-id ~/.screenlayout/desktop.sh &
+exec --no-startup-id ~/.config/polybar/launch.sh &
 exec --no-startup-id dunst &
 exec --no-startup-id picom -b --config /home/jake/.config/picom/picom.conf --experimental-backends &
 exec --no-startup-id nitrogen --restore &

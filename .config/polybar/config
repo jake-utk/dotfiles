@@ -1,115 +1,88 @@
-[settings]
-format-padding = 1
-format-margin = 1
+;==========================================================
+;
+;
+;   ██████╗  ██████╗ ██╗  ██╗   ██╗██████╗  █████╗ ██████╗
+;   ██╔══██╗██╔═══██╗██║  ╚██╗ ██╔╝██╔══██╗██╔══██╗██╔══██╗
+;   ██████╔╝██║   ██║██║   ╚████╔╝ ██████╔╝███████║██████╔╝
+;   ██╔═══╝ ██║   ██║██║    ╚██╔╝  ██╔══██╗██╔══██║██╔══██╗
+;   ██║     ╚██████╔╝███████╗██║   ██████╔╝██║  ██║██║  ██║
+;   ╚═╝      ╚═════╝ ╚══════╝╚═╝   ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝
+;
+;
+;   To learn more about how to configure Polybar
+;   go to https://github.com/polybar/polybar
+;
+;   The README contains a lot of information
+;
+;==========================================================
 
-[cols] 
-background = ${xrdb:background:#fff}
-accent_dark = ${xrdb:color4:#fff}
-accent_light = ${xrdb:color12:#fff}
+[colors]
+background           = #1c2125
+background-alt       = #7488A6
+foreground           = #dfdedf
+foreground-alt       = #7488A6
+primary              = #5D9094
+secondary            = #6F6F6F
+alert                = #FF0000
 
-[bar/root]
-font-0 = "JetBrainsMono Nerd Font:size=10;2"
-override-redirect = true
+color0               = #101316
+color1               = #5E738B
+color2               = #677B93
+color3               = #7A899C
+color4               = #7E8EA1
+color5               = #9D9D9D
+color6               = #C9A7A6
+
+[bar/example]
+width = 98%
+height = 26
+offset-x = 1%
+offset-y = 1%
+radius = 0.0
+fixed-center = true
+bottom = false
+
+background = ${colors.background}
+foreground = ${colors.foreground}
+
+line-size = 2
+line-color = ${colors.background-alt}
+
+border-size = 0
+border-color = ${colors.background}
+
+padding-left = 0
+padding-right = 0
+
+module-margin-left  = 0
+module-margin-right = 0
+
+font-0 = Iosevka Nerd Font:style=Medium:size=8;1
+font-1 = feather:style=Medium:size=12;3
+font-2 = Iosevka Nerd Font:style=Medium:size=19;5
+font-3 = Iosevka Nerd Font:style=Medium:size=12;4
+font-4 = Iosevka Nerd Font:style=Medium:size=7;4
+
+modules-left = date
+modules-center = date
+modules-right = date
+
 wm-restack = i3
-offset-y=10px
-height=28px
-enable-ipc = true
 
-[bar/left]
-inherit=bar/root
-modules-left = appmenu dunst power
-offset-x = 24px
-width = 104px
-background = ${cols.accent_light}
-
-[bar/centre]
-inherit=bar/root
-background = ${cols.background}
-width = 400px
-modules-center = date 
-offset-x = 50%:-200px
-tray-position = left
-
-[bar/right]
-inherit=bar/root
-background = ${cols.background}
-modules-right = ethernet wifi
-offset-x = 100%:-374px
-width = 350px
-line-size = 2px
-
-# left modules
-
-[module/appmenu]
-type=custom/text
-content=
-click-left=rofi -show drun -modi drun -display-drun "Applications"
-content-foreground = ${cols.background}
-
-# centre modules
-
-# right modules
-
-#[module/spotify]
-#type=custom/script
-#exec=~/scripts/spotify.sh
-#interval=2
-#format= <label>
-#format-underline = #ff8d8d
-
-
-#[module/alsa]
-#type=internal/pulseaudio
-
-#format-volume-underline = ${cols.accent_light}
-
-#ramp-volume-0 = 奄
-#ramp-volume-1 = 奔
-#ramp-volume-2 = 墳
-
-#format-volume = <ramp-volume> <label-volume>
-
-#format-muted-underline = ${cols.accent_light}
-#label-muted = ﱝ %percentage%%
-
-#use-ui-max = false
-
-[module/net-base]
-type=internal/network
-format-connected-underline = ${cols.accent_light}
-format-disconnected-underline = ${cols.accent_light}
-label-connected = %local_ip%
-
-[module/ethernet]
-inherit=module/net-base
-interface=enp3s0
-format-connected =  <label-connected>
-
-[module/wifi]
-inherit=module/net-base
-interface=wlan0
-format-connected = 直 <label-connected>
+cursor-click = pointer
+cursor-scroll = ns-resize
 
 [module/date]
 type = internal/date
-label = %time% %date%
-date = %b %d%
-time = %H:%M
-format-underline = ${cols.accent_light}
+interval = 5
 
-[module/power]
-type=custom/text
-content=襤
-click-left=~/scripts/shutdown.sh
-format-margin = 0
-content-foreground = ${cols.background}
+time = " %a %b %d, %I:%M %p "
+;time = " %I:%M %p "
+time-alt  = " %d-%m-%Y"
 
-[module/dunst]
-type = custom/ipc
-initial = 1
-format-margin = 0
+format-foreground = ${colors.foreground}
+format-background = ${colors.color4}
+format-padding    = 1
 
-hook-0 = echo "%{A1:notify-send "DUNST_COMMAND_PAUSE" && polybar-msg hook dunst 2:}%{A}" &
-hook-1 = echo "%{A1:notify-send "DUNST_COMMAND_RESUME" && polybar-msg hook dunst 1:}%{A}" &
-format-foreground = ${cols.background}
-# vi: ft=dosini
+;format-prefix =   
+;label = " %time%"

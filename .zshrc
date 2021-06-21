@@ -114,3 +114,4 @@ alias sandbox="code ~/dev/sandbox"
 alias dotfiles='/usr/bin/git --git-dir=/home/jake/.dotfiles/ --work-tree=/home/jake'
 alias to-do='vim ~/Documents/notes/to-do.md'
 alias deep-house='vim ~/Documents/notes/music/deep-house.md'
+# alias notes='exec obsidian'
