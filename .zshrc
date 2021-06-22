@@ -1,5 +1,5 @@
 # If you come from bash you might have to change your $PATH.
-export PATH=$HOME/bin:/usr/local/bin:$HOME/.local/bin:$PATH
+export PATH=$HOME/bin:/usr/local/bin:$HOME/.local/bin:$HOME/.scripts:$PATH
 
 # Path to your oh-my-zsh installation.
 export ZSH="/home/jake/.oh-my-zsh"
@@ -112,6 +112,7 @@ alias myip="curl http://ipecho.net/plain; echo"
 #alias vpn:down="protonvpn-cli disconnect"
 alias sandbox="code ~/dev/sandbox"
 alias dotfiles='/usr/bin/git --git-dir=/home/jake/.dotfiles/ --work-tree=/home/jake'
+alias audio-devices='pactl list sinks | grep "Sink #\|Ports\|analog-ou" -A 3'
 alias to-do='vim ~/Documents/notes/to-do.md'
 alias deep-house='vim ~/Documents/notes/music/deep-house.md'
 # alias notes='exec obsidian'
