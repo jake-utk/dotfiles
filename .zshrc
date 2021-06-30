@@ -113,6 +113,6 @@ alias myip="curl http://ipecho.net/plain; echo"
 alias sandbox="code ~/dev/sandbox"
 alias dotfiles='/usr/bin/git --git-dir=/home/jake/.dotfiles/ --work-tree=/home/jake'
 alias audio-devices='pactl list sinks | grep "Sink #\|Ports\|analog-ou" -A 3'
-alias to-do='vim ~/Documents/notes/to-do.md'
-alias deep-house='vim ~/Documents/notes/music/deep-house.md'
+alias to-do='vim ~/docs/notes/to-do.md'
+alias deep-house='vim ~/docs/notes/music/deep-house.md'
 # alias notes='exec obsidian'
