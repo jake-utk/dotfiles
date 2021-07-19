@@ -1,5 +1,5 @@
 configuration {
-/*	theme: "jake.rasi";*/
+	theme: "jake.rasi";
 /*	modi: "window,run,ssh";*/
 /*	width: 50;*/
 /*	lines: 15;*/
