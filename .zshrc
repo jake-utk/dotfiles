@@ -111,10 +111,7 @@ alias vpn="sudo protonvpn s"
 alias vpn:status="sudo protonvpn s"
 alias vpn:up="sudo protonvpn connect -f"
 alias vpn:down="sudo protonvpn disconnect"
-alias sysch="echo 'Checking vpn...' && sudo protonvpn s | grep Status: && echo 'Checking firewall...' && ufw | grep Status:"
+alias sysch="echo 'Checking vpn...' && sudo protonvpn s | grep Status: && echo 'Checking firewall...' && sudo ufw status | grep Status:"
 alias sandbox="code ~/dev/sandbox"
 alias dotfiles='/usr/bin/git --git-dir=/home/jake/.dotfiles/ --work-tree=/home/jake'
 alias audio-devices='pactl list sinks | grep "Sink #\|Ports\|analog-ou" -A 3'
-alias to-do='vim ~/docs/notes/to-do.md'
-alias deep-house='vim ~/docs/notes/music/deep-house.md'
-# alias notes='exec obsidian'
