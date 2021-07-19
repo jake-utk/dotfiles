@@ -42,6 +42,7 @@ monitor=${env:MONITOR:}
 bottom=false
 override-redirect=false
 background=${colors.background}
+font-0="Fira Code:style=Regular:size=11"
 foreground=${colors.foreground}
 width=100%
 height=40
@@ -50,6 +51,7 @@ modules-left=workspaces
 modules-center=time
 modules-right=network volume ram cpu date
 ;pseudo-transparency=true
+separator="|"
 
 ; ==========================================
 ; modules
@@ -61,6 +63,7 @@ interval=0.5
 format=<label>
 label="[ RAM: %percentage_used%% ]"
 label-padding=5
+label-font=0
 
 [module/cpu]
 type=internal/cpu
