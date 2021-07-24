@@ -31,7 +31,7 @@ no_focus [window_type="notification"]
 set_from_resource $col12 color12 #000000
 
 # class        border		background 	text 	indicator 	child-border
-client.focused $col12 $col12 #222222 #2e9ef4 	#e6b3ff
+client.focused $col12 $col12 #222222 #2e9ef4 	#f78538
 client.unfocused #222222 #222222 #888888 #292d2e   #222222
 
 title_align center
