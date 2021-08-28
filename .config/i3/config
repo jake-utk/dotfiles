@@ -203,6 +203,9 @@ bindsym $mod+r mode "resize"
 # Focus follows mouse.  When "yes", window focus follows your mouse movements as the mouse crosses window borders.
 focus_follows_mouse no
 
+# Mouse warping, by default when switching focus to a window on a different output, the cursor is warped to the center of that window.  "None" disables this.
+mouse_warping none
+
 #
 # Autostart programs
 #
