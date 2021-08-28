@@ -200,6 +200,9 @@ mode "resize" {
 
 bindsym $mod+r mode "resize"
 
+# Focus follows mouse.  When "yes", window focus follows your mouse movements as the mouse crosses window borders.
+focus_follows_mouse no
+
 #
 # Autostart programs
 #
