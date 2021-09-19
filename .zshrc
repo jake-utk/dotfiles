@@ -111,6 +111,7 @@ alias vpn="sudo protonvpn s"
 alias vpn:status="sudo protonvpn s"
 alias vpn:up="sudo protonvpn connect -f"
 alias vpn:down="sudo protonvpn disconnect"
+alias vpn:refresh="sudo protonvpn disconnect && sudo protonvpn connect -f"
 alias sysch="echo 'Checking vpn...' && sudo protonvpn s | grep Status: && echo 'Checking firewall...' && sudo ufw status | grep Status:"
 alias sandbox="code ~/dev/sandbox"
 alias dotfiles='/usr/bin/git --git-dir=/home/jake/.dotfiles/ --work-tree=/home/jake'
