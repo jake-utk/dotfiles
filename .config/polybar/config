@@ -42,35 +42,192 @@ monitor=${env:MONITOR:}
 bottom=false
 override-redirect=false
 background=${colors.background}
-font-0="Fira Code:style=Regular:size=11"
 foreground=${colors.foreground}
 width=100%
 height=40
 offset-x=0
 modules-left=workspaces
-modules-center=time
-modules-right=network volume ram cpu date
+modules-center=datetime
+modules-right=ram temperature cpu volume battery network
 ;pseudo-transparency=true
-separator="|"
 
 ; ==========================================
 ; modules
 ; ==========================================
 
+[module/temperature]
+type = internal/temperature
+
+; Seconds to sleep between updates
+; Default: 1
+interval = 0.5
+
+; Thermal zone to use
+; To list all the zone types, run 
+; $ for i in /sys/class/thermal/thermal_zone*; do echo "$i: $(<$i/type)"; done
+; Default: 0
+thermal-zone = 0
+
+; Full path of temperature sysfs path
+; Use `sensors` to find preferred temperature source, then run
+; $ for i in /sys/class/hwmon/hwmon*/temp*_input; do echo "$(<$(dirname $i)/name): $(cat ${i%_*}_label 2>/dev/null || echo $(basename ${i%_*})) $(readlink -f $i)"; done
+; to find path to desired file
+; Default reverts to thermal zone setting
+hwmon-path = /sys/devices/platform/coretemp.0/hwmon/hwmon3/temp1_input
+
+; Base temperature for where to start the ramp (in degrees celsius)
+; Default: 0
+base-temperature = 20
+
+; Threshold temperature to display warning label (in degrees celsius)
+; Default: 80
+warn-temperature = 80 
+
+; Whether or not to show units next to the temperature tokens (°C, °F)
+; Default: true
+units = false
+
+; Available tags:
+;   <label> (default)
+;   <ramp>
+format = <ramp> <label>
+
+; Available tags:
+;   <label-warn> (default)
+;   <ramp>
+format-warn = <ramp> <label-warn>
+
+; Available tokens:
+;   %temperature% (deprecated)
+;   %temperature-c%   (default, temperature in °C)
+;   %temperature-f%   (temperature in °F)
+label ="[ T: %temperature-c% ]"
+
+; Available tokens:
+;   %temperature% (deprecated)
+;   %temperature-c%   (default, temperature in °C)
+;   %temperature-f%   (temperature in °F)
+label-warn ="[ T: %temperature-c% ]"
+label-warn-foreground = #f00
+
+; Requires the <ramp> tag
+; The icon selection will range from `base-temperature` to `warn-temperature`,
+; temperatures at and above `warn-temperature` will use the last icon
+; and temperatures at and below `base-temperature` will use `ramp-0`. 
+; All other icons are distributed evenly between the two temperatures.
+ramp-0 = A
+ramp-1 = B
+ramp-2 = C
+ramp-foreground = #55
+
+
+[module/battery]
+type = internal/battery
+
+; This is useful in case the battery never reports 100% charge
+full-at = 99
+
+; Use the following command to list batteries and adapters:
+; $ ls -1 /sys/class/power_supply/
+battery = BAT0
+adapter = ADP1
+
+; If an inotify event haven't been reported in this many
+; seconds, manually poll for new values.
+;
+; Needed as a fallback for systems that don't report events
+; on sysfs/procfs.
+;
+; Disable polling by setting the interval to 0.
+;
+; Default: 5
+poll-interval = 5
+
+; see "man date" for details on how to format the time string
+; NOTE: if you want to use syntax tags here you need to use %%{...}
+; Default: %H:%M:%S
+time-format = %H:%M
+
+; Available tags:
+;   <label-charging> (default)
+;   <bar-capacity>
+;   <ramp-capacity>
+;   <animation-charging>
+format-charging = <animation-charging> <label-charging>
+
+; Available tags:
+;   <label-discharging> (default)
+;   <bar-capacity>
+;   <ramp-capacity>
+;   <animation-discharging>
+format-discharging = <ramp-capacity> <label-discharging>
+
+; Available tags:
+;   <label-full> (default)
+;   <bar-capacity>
+;   <ramp-capacity>
+;format-full = <ramp-capacity> <label-full>
+
+; Available tokens:
+;   %percentage% (default) - is set to 100 if full-at is reached
+;   %percentage_raw%
+;   %time%
+;   %consumption% (shows current charge rate in watts)
+label-charging ="[ BAT: +%percentage%% ] "
+
+; Available tokens:
+;   %percentage% (default) - is set to 100 if full-at is reached
+;   %percentage_raw%
+;   %time%
+;   %consumption% (shows current discharge rate in watts)
+label-discharging ="[ BAT: -%percentage%% ] "
+
+; Available tokens:
+;   %percentage% (default) - is set to 100 if full-at is reached
+;   %percentage_raw%
+label-full ="[ BAT: Full ] "
+
+; Only applies if <ramp-capacity> is used
+ramp-capacity-0 = 
+ramp-capacity-1 = 
+ramp-capacity-2 = 
+ramp-capacity-3 = 
+ramp-capacity-4 = 
+
+; Only applies if <bar-capacity> is used
+bar-capacity-width = 10
+
+; Only applies if <animation-charging> is used
+animation-charging-0 = 
+animation-charging-1 = 
+animation-charging-2 = 
+animation-charging-3 = 
+animation-charging-4 = 
+; Framerate in milliseconds
+animation-charging-framerate = 750
+
+; Only applies if <animation-discharging> is used
+animation-discharging-0 = 
+animation-discharging-1 = 
+animation-discharging-2 = 
+animation-discharging-3 = 
+animation-discharging-4 = 
+; Framerate in milliseconds
+animation-discharging-framerate = 500
+
 [module/ram]
 type=internal/memory
 interval=0.5
 format=<label>
-label="[ RAM: %percentage_used%% ]"
-label-padding=5
-label-font=0
+label="[ R: %percentage_used%% ]"
+label-padding=2.5
 
 [module/cpu]
 type=internal/cpu
 interval=0.5
 format=<label>
-label="[ CPU: %percentage%% ]"
-label-padding=5
+label="[ C: %percentage%% ]"
+label-padding=2.5
 
 [module/volume]
 type=internal/pulseaudio
@@ -86,25 +243,17 @@ label-muted-padding=5
 
 [module/network]
 type=internal/network
-interface=enp6s0
-ping-interval=3
+interface=wlan0
+interval=3
+;label="[ %interface% | %ip%% ]"
 
-[module/time]
+[module/datetime]
 type=internal/date
 interval=1.0
-time="[ %H : %M : %S ]"
-label="%time%"
+time="%H : %M : %S"
+date="%m / %d%"
+label="[ %time% | %date% ]"
 label-padding=5
-
-
-[module/date]
-type=internal/date
-interval=1.0
-date="[ %m / %d ]"
-label="%date%"
-label-padding=5
-;label-padding-right=5
-
 
 [module/workspaces]
 type=internal/i3
