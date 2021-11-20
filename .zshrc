@@ -3,8 +3,6 @@ export ZSH="/home/jake/.oh-my-zsh"
 
 if [[ $(uname -r | sed "s/[^[:alpha:]]//g") == "arch" ]]; then
         source $HOME/.bash_aliases
-        # source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
-        # source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 fi
 
 plugins=(git
