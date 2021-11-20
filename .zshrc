@@ -3,13 +3,15 @@ export ZSH="/home/jake/.oh-my-zsh"
 
 if [[ $(uname -r | sed "s/[^[:alpha:]]//g") == "arch" ]]; then
         source $HOME/.bash_aliases
-        source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
-        source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+        # source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+        # source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 fi
 
 plugins=(git
         git-prompt
-        battery)
+        battery
+        zsh-autosuggestions
+        zsh-syntax-highlighting)
 
 # For adjustment of git-prompt, see $HOME/.oh-my-zsh/plugins/git-prompt.plugin.zsh
 # To use battery plugin, must have acpi package installed
