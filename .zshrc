@@ -10,7 +10,7 @@ plugins=(git
 
 # For adjustment of git-prompt, see $HOME/.oh-my-zsh/plugins/git-prompt.plugin.zsh
 # To use battery plugin, must have acpi package installed
-PROMPT='%(?.%F{green}√.%F{red}✗)%f%(1j. ⚙.) %B%F{240}%1~%f%b $(git_super_status) %# '
+PROMPT='%(?.%F{green}√.%F{red}✗)%f%(1j. ⚙.) %B%F{240}%1~%f%b $(git_super_status)%# '
 RPROMPT='%* $(battery_pct_prompt)'
 
 source $ZSH/oh-my-zsh.sh
