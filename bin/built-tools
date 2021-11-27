@@ -1,0 +1,47 @@
+#!/bin/bash
+
+
+# NOTE:  If your built-tools repo isn't in $HOME/dev/, you can adjust the conditional in get_tools_dir_path to speed up the program significantly.
+
+#TODO
+# Verify correct git branch is checked out
+
+display_help() {
+    echo "Access built-tools from anywhere!"
+    echo "Usage:"
+    echo "built-tools <bank_id> <output_file_name>"
+    echo "=> Pulls all loans for lender"
+    echo "built-tools <bank_id> <output_file_name> --no-loans"
+    echo "=> Pulls lender seed without loans"
+    echo "For additional help, see built-tools repo."
+}
+
+get_tools_dir_path() {
+    if [[ -d $HOME/dev/built-tools ]]; then
+        echo "$HOME/dev/built-tools"
+    else
+        find $HOME -type d -name built-tools 2> /dev/null
+    fi
+}
+
+built_tools_wrapper() {
+    bin/built extract lender $1 --single-stack $2
+}
+
+built_tools_wrapper_no_loans() {
+    bin/built extract lender $1 -l -a -p --skip-loans --output-file $2
+}
+
+main() {
+    if [[ $1 == "help" ]]; then
+        display_help $1
+    elif [[ -n $3 && $3 == "--no-loans" ]]; then
+        built_tools_wrapper_no_loans $1 $2
+    else
+        built_tools_wrapper $1 $2
+    fi
+}
+
+cd $(get_tools_dir_path)
+main $1 $2 $3
+cd -

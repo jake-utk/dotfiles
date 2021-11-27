@@ -1,0 +1,93 @@
+#!/bin/bash
+
+# NOTE:  This will fail if your virtual environment isn't already built where ever your integration support repo exists.
+# NOTE:  If your integration-support repo isn't in $HOME/dev/, you can adjust the conditional in get_support_dir_path to speed up the program significantly.
+
+#TODO
+# Expand dump_single_stack_db to rename it in cache
+# https://dev.mysql.com/doc/refman/8.0/en/cleartext-pluggable-authentication.html
+
+
+mysql_login() {
+    echo "Logging into $4 MySQL REPL..."
+    echo "$(echo "[client]
+password=$3" > /tmp/mysql_login.out)"
+    mysql --defaults-file=/tmp/mysql_login.out -u $1 -h $2 built_local_api_0
+    rm /tmp/mysql_login.out
+}
+
+extract_value_from_string() {
+    echo $(grep $1 /tmp/ss_login.out | cut -d ":" -f 2 | awk '{print substr($0, 3, length($0) - 4)}')
+}
+
+help_header() {
+    echo "### BUILT INTEGRATION-SUPPORT REPO WRAPPER ###"
+    echo "- Access all standard integration-support make commands from anywhere!"
+    echo "- Log directly into a single stack's RDS MySQL REPL!"
+    echo "- single_stack_creds and flush_cognito can accept a dns-prefix as third"
+    echo "  argument!"
+    echo ""
+    echo "PLEASE NOTE:  There is VERY LITTLE error handling in this wrapper!  If you"
+    echo "experience any issues please use the traditional commands in the directory."
+    echo ""
+    echo "Examples:"
+    echo "$ support <make command without make>"
+    echo "=> runs make command from support repo"
+    echo "=> support dump_single_stack_db"
+    echo "$ support <flush_cognito or single_stack_creds> <dns-prefix>"
+    echo "=> support single_stack_creds nbtbank"
+    echo "$ support mysql <dns-prefix>"
+    echo "=> logs into MySQL RDS db for dns-prefix"
+    echo ""
+    echo "$PWD make commands:"
+    echo ""
+    make $1
+}
+
+aws_login_wrapper() {
+    awslogin prod-integrations && export AWS_SHARED_CREDENTIALS_FILE=~/.aws/prod-integrations
+}
+
+get_ss_creds_with_dns() {
+    pipenv run python cli/single_stacks.py single-stack-creds --dns-prefix=$1
+}
+
+flush_cognito_with_dns() {
+    pipenv run python cli/single_stacks.py flush-cognito --env=prod --dns-prefix=$1
+}
+
+get_support_dir_path() {
+    if [[ -d $HOME/dev/integration-support ]]; then
+        echo "$HOME/dev/integration-support"
+    else
+        find $HOME -type d -name integration-support 2> /dev/null
+    fi
+}
+
+main() {
+    if [[ $1 == "help" ]]; then
+        help_header $1
+    elif [[ $1 == "mysql" && -n $2 ]]; then
+        aws_login_wrapper && get_ss_creds_with_dns $2 | grep "'mysql_" > /tmp/ss_login.out
+
+        DNS_PREFIX=$2
+        MYSQL_HOST=$(extract_value_from_string host)
+        MYSQL_PASSWORD=$(extract_value_from_string password)
+        MYSQL_USER=$(extract_value_from_string user)
+        
+        rm /tmp/ss_login.out
+
+        mysql_login $MYSQL_USER $MYSQL_HOST $MYSQL_PASSWORD $DNS_PREFIX
+
+    elif [[ $1 == "single_stack_creds" && -n $2 ]]; then
+        aws_login_wrapper && get_ss_creds_with_dns $2
+    elif [[ $1 == "flush_cognito" && -n $2 ]]; then
+        aws_login_wrapper && flush_cognito_with_dns $2
+    else
+        make $1
+    fi
+}
+
+cd $(get_support_dir_path)
+main $1 $2 $3
+cd -

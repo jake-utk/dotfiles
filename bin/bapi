@@ -1,0 +1,16 @@
+#!/bin/bash
+
+
+aws_login_wrapper() {
+    awslogin prod-integrations
+    export AWS_SHARED_CREDENTIALS_FILE=~/.aws/prod-integrations
+}
+
+main() {
+    aws_login_wrapper
+    mysql_login=$(awslogin -db=prod-cla-bapi-replica-us-east-1 prod-integrations | tail -n 1 | tr -d '"')
+    echo "Logging into PROD-CLA-BAPI-REPLICA-US-EAST-1 MySQL REPL..."
+    $mysql_login built_api
+}
+
+main
