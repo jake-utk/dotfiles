@@ -7,8 +7,10 @@ export PATH="$PYENV_ROOT/bin:$PYENV_ROOT/shims:$PATH"
 eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
 
-# poetry 
-export PATH="$HOME/.poetry/bin:$PATH"
+# poetry
+if [[ -e "$HOME/.poetry/bin" ]]; then
+    export PATH="$HOME/.poetry/bin:$PATH"
+fi
 
 # nvm
 export NVM_DIR="$HOME/.nvm"
@@ -38,9 +40,9 @@ PROMPT='%(?.%F{green}√.%F{red}✗)%f%(1j. ⚙.) $(venv_info)%B%F{240}%1~%f%b $
 
 # display battery info for laptop
 if [[ $HOST == 'arch-thinkpad' ]]; then
-        RPROMPT='%* $(battery_pct_prompt)'
+    RPROMPT='%* $(battery_pct_prompt)'
 else
-        RPROMPT='%*'
+    RPROMPT='%*'
 fi
 
 # mutual aliases
@@ -49,5 +51,5 @@ alias myip="curl http://ipecho.net/plain; echo"
 
 # arch linux aliases
 if [[ $(uname -r | sed "s/[^[:alpha:]]//g") == "arch" ]]; then
-        source $HOME/.bash_aliases
+    source $HOME/.bash_aliases
 fi
