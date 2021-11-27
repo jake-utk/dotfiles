@@ -1,0 +1,9 @@
+#!/bin/bash
+
+main() {
+    echo "* Restarting polybar *"
+    pgrep polybar | xargs -I pid kill pid && exec ~/.config/polybar/launch.sh &
+}
+
+main
+
