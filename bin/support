@@ -52,6 +52,14 @@ get_ss_creds_with_dns() {
     pipenv run python cli/single_stacks.py single-stack-creds --dns-prefix=$1
 }
 
+dump_ss_db_with_dns() {
+    pipenv run python cli/single_stacks.py dump-single-stack-db --dns-prefix=$1 --is-rds --output-path=$HOME/.built/cache
+}
+
+dump_ss_db() {
+    pipenv run python cli/single_stacks.py dump-single-stack-db --is-rds --output-path=$HOME/.built/cache
+}
+
 flush_cognito_with_dns() {
     pipenv run python cli/single_stacks.py flush-cognito --env=prod --dns-prefix=$1
 }
@@ -83,11 +91,15 @@ main() {
         aws_login_wrapper && get_ss_creds_with_dns $2
     elif [[ $1 == "flush_cognito" && -n $2 ]]; then
         aws_login_wrapper && flush_cognito_with_dns $2
+    elif [[ $1 == "dump_single_stack_db" && -n $2 ]]; then
+        aws_login_wrapper && dump_ss_db_with_dns $2
+    elif [[ $1 == "dump_single_stack_db" ]]; then
+        aws_login_wrapper && dump_ss_db_with_dns
     else
         make $1
     fi
 }
 
-cd $(get_support_dir_path)
+cd $(get_support_dir_path) 2> /dev/null
 main $1 $2 $3
-cd -
+cd - 1> /dev/null
