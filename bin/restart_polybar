@@ -1,8 +1,15 @@
 #!/bin/bash
 
+
+start_polybar() {
+    echo "Executing polybar start script..."
+    exec $HOME/.config/polybar/launch.sh &
+}
+
 main() {
-    echo "* Restarting polybar *"
-    pgrep polybar | xargs -I pid kill pid && exec ~/.config/polybar/launch.sh &
+    echo "* Restarting of polybar initiated *"
+    start_polybar
+    echo "Polybar restart complete!"
 }
 
 main
