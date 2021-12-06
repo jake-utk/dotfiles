@@ -1,0 +1,9 @@
+#!/bin/bash
+
+
+main() {
+    echo "Attempting to run migrations on single stack database: api-$1.getbuilt.com"
+    curl -L https://api-$1.getbuilt.com/reset/migrate.php
+}
+
+main $1
