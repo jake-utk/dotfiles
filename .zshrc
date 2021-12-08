@@ -64,4 +64,6 @@ if [[ $(echo $HOST | cut -d "." -f 1) == "MacBook-Pro" ]]; then
     export BUILT_SKIP_SERVICES=lot-management,agreements-service,accounting-service,auth-service,collateral-service,files-service,geolocations-service,payments-service,inspections-service,cla-product-api,cla-miniapp
     export SOURCE_REPO_PATH="/Users/jake.addis/dev/integration-pipelines"
     source "$SOURCE_REPO_PATH/integration-pipelines.zsh"
+    echo "Welcome back, $USER!"
+    echo "$(tenure)"
 fi
