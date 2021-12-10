@@ -3,7 +3,7 @@
 
 start_polybar() {
     echo "Executing polybar start script..."
-    exec $HOME/.config/polybar/launch.sh &
+    exec $HOME/.config/polybar/launch.sh &> /dev/null &
 }
 
 main() {
