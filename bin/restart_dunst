@@ -1,0 +1,16 @@
+#!/bin/bash
+
+
+start_dunst() {
+    echo "Waking dunst back up..."
+    notify-send "Ok, ok, I'm up!"
+}
+
+main() {
+    echo "* Restarting of Dunst initiated *"
+    killall dunst ; start_dunst
+    echo "Dunst restart complete!"
+}
+
+main
+
