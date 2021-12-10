@@ -1,8 +1,0 @@
-// vim: syntax=css
-
-* {
-	background-color: transparent;
-	font: "Fira Code 10";
-}
-
-

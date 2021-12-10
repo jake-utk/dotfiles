@@ -1,4 +1,4 @@
 configuration {
 }
 
-@theme "jake.rasi"
+@theme "text_config.rasi"
