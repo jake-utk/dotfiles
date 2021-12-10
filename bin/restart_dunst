@@ -3,7 +3,7 @@
 
 start_dunst() {
     echo "Waking dunst back up..."
-    notify-send "Ok, ok, I'm up!"
+    notify-send "Alright!" "I'm up!"
 }
 
 main() {
