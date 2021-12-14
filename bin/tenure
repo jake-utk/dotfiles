@@ -10,6 +10,4 @@ next_year_num = int(current_year)+1
 next_anniversary = date(next_year_num,3,8)
 difference_till_anniversary = next_anniversary - today
 
-print(f"It has been {difference.days} since you started at Built ({start_date}).  Your {int(current_year) - 2021 + 1} year mark is in {difference_till_anniversary.days} days.")
-#print(f"There are {difference_till_anniversary.days} days until your {int(current_year) - 2021 + 1} year mark.")
-
+print(f"==> It has been {difference.days} since you started at Built ({start_date}).\n==> Your {int(current_year) - 2021 + 1} year mark is in {difference_till_anniversary.days} days.")

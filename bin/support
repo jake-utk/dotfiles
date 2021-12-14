@@ -11,7 +11,7 @@
 mysql_login() {
     echo "Logging into $4 MySQL REPL..."
     echo "$(echo "[client]
-password=$3" > /tmp/mysql_login.out)"
+password='$3'" > /tmp/mysql_login.out)"
     mysql --defaults-file=/tmp/mysql_login.out -u $1 -h $2 built_local_api_0
     rm /tmp/mysql_login.out
 }
