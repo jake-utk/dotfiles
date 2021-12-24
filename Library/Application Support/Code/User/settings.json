@@ -32,6 +32,5 @@
     "jupyter.maxOutputSize": 20000,
     "workbench.colorTheme": "Default High Contrast",
     "editor.acceptSuggestionOnCommitCharacter": false,
-    "notebook.lineNumbers": "on",
-    "window.zoomLevel": 1
+    "notebook.lineNumbers": "on"
 }
