@@ -22,7 +22,6 @@
     "editor.wordWrap": "on",
     "vsicons.dontShowNewVersionMessage": true,
     "editor.fontSize": 16,
-    "notebook.output.textLineLimit": 20000,
     "notebook.compactView": false,
     "notebook.consolidatedRunButton": true,
     "notebook.displayOrder": [],
@@ -32,5 +31,6 @@
     "jupyter.maxOutputSize": 20000,
     "workbench.colorTheme": "Default High Contrast",
     "editor.acceptSuggestionOnCommitCharacter": false,
-    "notebook.lineNumbers": "on"
+    "notebook.lineNumbers": "on",
+    "notebook.output.textLineLimit": 40000
 }
