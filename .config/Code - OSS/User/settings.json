@@ -19,5 +19,6 @@
     },
     "workbench.iconTheme": "vscode-icons",
     "workbench.startupEditor": "newUntitledFile",
-    "vsicons.dontShowNewVersionMessage": true
+    "vsicons.dontShowNewVersionMessage": true,
+    "jupyter.askForKernelRestart": false
 }
