@@ -1,0 +1,24 @@
+{
+    "docker.showStartPage": false,
+    "editor.fontFamily": "'Fira Code', 'monospace'",
+    "editor.fontSize": 15,
+    "editor.wordWrap": "on",
+    "explorer.confirmDelete": false,
+    "explorer.confirmDragAndDrop": false,
+    "notebook.output.textLineLimit": 99999,
+    "python.dataScience.alwaysTrustNotebooks": true,
+    "python.dataScience.askForKernelRestart": false,
+    "python.dataScience.textOutputLimit": 0,
+    "python.showStartPage": false,
+    "window.menuBarVisibility": "compact",
+    "window.titleBarStyle": "custom",
+    "window.zoomLevel": 1,
+    "workbench.colorTheme": "Default High Contrast",
+    "workbench.editorAssociations": {
+        "*.csv": "default"
+    },
+    "workbench.iconTheme": "vscode-icons",
+    "workbench.startupEditor": "newUntitledFile",
+    "vsicons.dontShowNewVersionMessage": true,
+    "jupyter.askForKernelRestart": false
+}
