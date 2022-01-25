@@ -32,5 +32,6 @@
     "workbench.colorTheme": "Default High Contrast",
     "editor.acceptSuggestionOnCommitCharacter": false,
     "notebook.lineNumbers": "on",
-    "notebook.output.textLineLimit": 40000
+    "notebook.output.textLineLimit": 40000,
+    "window.zoomLevel": 1
 }
