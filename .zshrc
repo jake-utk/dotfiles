@@ -1,7 +1,7 @@
 export PATH=$HOME/bin:/usr/local/opt/awscli@1/bin:/Applications/Docker.app/Contents/Resources/bin/docker-compose-v1:$PATH
 export ZSH=$HOME/.oh-my-zsh
 
-if [[ $(echo $HOST | cut -d "." -f 1) == "Jake-Addis-MBP16" ]]; then
+if [[ $(echo $HOST | cut -d "." -f 1) == "JakeAddisMBP16" ]]; then
     export ZSH_DISABLE_COMPFIX="true"
 fi
 
@@ -44,7 +44,7 @@ export VIRTUAL_ENV_DISABLE_PROMPT=1
 PROMPT='%(?.%F{green}√.%F{red}✗)%f%(1j. ⚙.) $(venv_info)%B%F{240}%1~%f%b $(git_super_status)%# '
 
 # display battery info if laptop
-if [[ $HOST == 'arch-thinkpad' || $(echo $HOST | cut -d "." -f 1) == "Jake-Addis-MBP16" ]]; then
+if [[ $HOST == 'arch-thinkpad' || $(echo $HOST | cut -d "." -f 1) == "JakeAddisMBP16" ]]; then
     RPROMPT='%* $(battery_pct_prompt)'
 else
     RPROMPT='%*'
@@ -55,12 +55,12 @@ alias hs="history | grep"
 alias myip="curl http://ipecho.net/plain; echo"
 
 # device specific aliases
-if [[ $(uname -r | sed "s/[^[:alpha:]]//g") == "arch" || $(echo $HOST | cut -d "." -f 1) == "Jake-Addis-MBP16" ]]; then
+if [[ $(uname -r | sed "s/[^[:alpha:]]//g") == "arch" || $(echo $HOST | cut -d "." -f 1) == "JakeAddisMBP16" ]]; then
     source $HOME/.bash_aliases
 fi
 
 # built specific
-if [[ $(echo $HOST | cut -d "." -f 1) == "Jake-Addis-MBP16" ]]; then
+if [[ $(echo $HOST | cut -d "." -f 1) == "JakeAddisMBP16" ]]; then
     export BUILT_SKIP_SERVICES=lot-management,agreements-service,accounting-service,auth-service,collateral-service,files-service,geolocations-service,payments-service,inspections-service,cla-product-api,cla-miniapp
     export SOURCE_REPO_PATH="/Users/jake.addis/dev/integration-pipelines"
     source "$SOURCE_REPO_PATH/integration-pipelines.zsh"
