@@ -208,8 +208,9 @@ mouse_warping none
 
 # Autostart programs
 
+# exec --no-startup-id dockd --daemon
+exec --no-startup-id nm-applet
 exec --no-startup-id ~/.config/polybar/launch.sh &
 exec --no-startup-id dunst &
 exec --no-startup-id picom -b --config /home/jake/.config/picom/picom.conf --experimental-backends &
 exec --no-startup-id nitrogen --restore &
-
