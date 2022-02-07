@@ -1,5 +1,6 @@
 export PATH=$HOME/bin:/usr/local/bin:$HOME/.local/bin:$PATH
 export ZSH=$HOME/.oh-my-zsh
+export EDITOR=/usr/bin/vim
 
 # pyenv
 export PYENV_ROOT="$HOME/.pyenv"
