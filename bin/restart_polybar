@@ -1,16 +1,21 @@
 #!/bin/bash
 
 
+# This script both launches polybar (from i3) and is
+# able to relaunch polybar entirely by calling program directly.
+
 start_polybar() {
-    echo "Executing polybar start script..."
-    exec $HOME/.config/polybar/launch.sh &> /dev/null &
+    polybar --reload main --log=error &> /dev/null & disown
+}
+
+kill_existing_polybars() {
+    killall -q polybar
+    # wait to end function until instances have stopped
+    while pgrep -u $UID -x polybar >/dev/null; do sleep 1; done
 }
 
 main() {
-    echo "* Restarting of polybar initiated *"
-    start_polybar
-    echo "Polybar restart complete!"
+    kill_existing_polybars && start_polybar
 }
 
 main
-
