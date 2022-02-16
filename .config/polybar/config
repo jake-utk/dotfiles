@@ -115,6 +115,7 @@ format=<label>
 format-prefix = " ["
 format-suffix = "] "
 label="|%gb_used%/%gb_total%"
+; icon options: 
 
 [module/cpu]
 type=internal/cpu
@@ -122,7 +123,8 @@ interval=0.5
 format=<label>
 format-prefix = " ["
 format-suffix = "] "
-label="|%percentage%%"
+label="|%percentage%%"
+; icon options:  ﬙ 
 
 [module/volume]
 type=internal/pulseaudio
@@ -145,10 +147,29 @@ click-right = pavucontrol
 type=internal/network
 interface=wlan0
 interval=1.0
-label-interface="%interface%"
-label-ip="%ip%"
 format-interface=
-format-ip=
+accumulate-stats = true
+format-connected = <ramp-signal><label-connected>
+format-connected-prefix = " ["
+format-connected-suffix = "] "
+format-disconnected = <label-disconnected>
+format-disconnected-prefix = " ["
+format-disconnected-suffix = "] "
+format-packetloss = <animation-packetloss><label-connected>
+format-packetloss-prefix = " ["
+format-packetloss-suffix = "] "
+label-connected = "直|%essid%|%local_ip%] [|%downspeed%] [|%upspeed%"
+label-disconnected = "睊|%ifname] [|disconnected"
+label-packetloss = "%essid% %signal%"
+ramp-signal-0 = 😱
+ramp-signal-1 = 😠
+ramp-signal-2 = 😒
+ramp-signal-3 = 😊
+ramp-signal-4 = 😃
+ramp-signal-5 = 😈
+animation-packetloss-0 = ⚠
+animation-packetloss-1 = 📶
+animation-packetloss-framerate = 500
 
 ; [module/wired-network]
 ; type=internal/network
