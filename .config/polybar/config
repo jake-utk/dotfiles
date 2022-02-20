@@ -41,7 +41,7 @@ height=40
 offset-x=0
 modules-left=workspaces
 modules-center=datetime
-modules-right=ram temperature cpu volume battery wireless-network
+modules-right=ram temperature cpu volume battery wireless-network wired-network network-activity
 
 ; ==========================================
 ; modules
@@ -51,7 +51,6 @@ modules-right=ram temperature cpu volume battery wireless-network
 type = internal/temperature
 interval = 0.5
 thermal-zone = 0
-hwmon-path = /sys/devices/platform/thinkpad_hwmon/hwmon/hwmon4/temp1_input
 base-temperature = 20
 warn-temperature = 80 
 units = true
@@ -147,42 +146,61 @@ click-right = pavucontrol
 type=internal/network
 interface=wlan0
 interval=1.0
-format-interface=
-accumulate-stats = true
-format-connected = <ramp-signal><label-connected>
+format-connected = <label-connected>
 format-connected-prefix = " ["
 format-connected-suffix = "] "
 format-disconnected = <label-disconnected>
 format-disconnected-prefix = " ["
 format-disconnected-suffix = "] "
-format-packetloss = <animation-packetloss><label-connected>
-format-packetloss-prefix = " ["
-format-packetloss-suffix = "] "
-label-connected = "直|%essid%|%local_ip%] [|%downspeed%] [|%upspeed%"
-label-disconnected = "睊|%ifname] [|disconnected"
-label-packetloss = "%essid% %signal%"
-ramp-signal-0 = 😱
-ramp-signal-1 = 😠
-ramp-signal-2 = 😒
-ramp-signal-3 = 😊
-ramp-signal-4 = 😃
-ramp-signal-5 = 😈
-animation-packetloss-0 = ⚠
-animation-packetloss-1 = 📶
-animation-packetloss-framerate = 500
+; format-packetloss = <animation-packetloss><label-connected>
+; format-packetloss-prefix = " ["
+; format-packetloss-suffix = "] "
+label-connected = "直|%essid%|%local_ip%"
+label-disconnected = "睊"
+; label-packetloss = "%essid% %signal%"
+; ramp-signal-0 = 😱
+; ramp-signal-1 = 😠
+; ramp-signal-2 = 😒
+; ramp-signal-3 = 😊
+; ramp-signal-4 = 😃
+; ramp-signal-5 = 😈
+; animation-packetloss-0 = ⚠
+; animation-packetloss-1 = 📶
+; animation-packetloss-framerate = 500
 
-; [module/wired-network]
-; type=internal/network
-; interface=enp0s31f6
-; interval=3.0
-; label="[%interface%|%ip%]"
+[module/wired-network]
+type=internal/network
+interface=enp60s0u1u1
+interval=1.0
+label-connected = "|%local_ip%"
+label-disconnected = ""
+format-connected-prefix = " ["
+format-connected-suffix = "] "
+format-connected = <label-connected>
+format-disconnected-prefix = " ["
+format-disconnected-suffix = "] "
+format-disconnected = <label-disconnected>
+
+[module/network-activity]
+type=internal/network
+interval=1.0
+interface=wlan0
+accumulate-stats = true
+label-connected = "%downspeed%|||%upspeed%"
+label-disconnected = "|disconnected"
+format-connected-prefix = " ["
+format-connected-suffix = "] "
+format-connected = <label-connected>
+format-disconnected-prefix = " ["
+format-disconnected-suffix = "] "
+format-disconnected = <label-disconnected>
 
 [module/datetime]
 type=internal/date
 interval=1.0
 time="%H:%M:%S"
 date="%m/%d%"
-label="[|%time%] [|%date%]"
+label="[%time%|||%date%]"
 
 [module/workspaces]
 type=internal/i3
