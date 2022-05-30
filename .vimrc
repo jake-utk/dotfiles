@@ -27,16 +27,12 @@ syntax on
 " Add numbers to the file.
 set number
 
-" Highlight cursor line underneath the cursor horizontally.
+" Highlight cursor line/column underneath the cursor horizontally/vertically.
 set cursorline
-
-" Highlight cursor line underneath the cursor vertically.
 "set cursorcolumn
 
-" Set shift width to 4 spaces.
+" Set shift/tab width to n spaces/columns.
 set shiftwidth=4
-
-" Set tab width to 4 columns.
 set tabstop=4
 
 " Use space characters instead of tabs.
@@ -86,8 +82,20 @@ set wildmode=list:longest
 " Wildmenu will ignore files with these extensions.
 set wildignore=*.docx,*.jpg,*.png,*.gif,*.pdf,*.pyc,*.exe,*.flv,*.img,*.xlsx
 
+" BACKGROUND ------------------------------------------------------------- {{{
+
+colorscheme codedark
+hi Normal guibg=NONE ctermbg=NONE
+hi LineNr ctermbg=NONE guibg=NONE
+hi SignColumn ctermbg=NONE guibg=NONE
+hi CursorLine ctermbg=NONE guibg=NONE
+
+" }}}
+
 " PLUGINS ---------------------------------------------------------------- {{{
 
+let NERDTreeShowHidden=1
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 nnoremap <leader>n :NERDTreeFocus<CR>
 nnoremap <C-n> :NERDTree<CR>
 nnoremap <C-t> :NERDTreeToggle<CR>
@@ -159,11 +167,11 @@ if has('gui_running')
     set background=dark
 
     " Set the color scheme.
-    colorscheme molokai
+    colorscheme codedark
 
     " Set a custom font you have installed on your computer.
     " Syntax: <font_name>\ <weight>\ <size>
-    set guifont=Monospace\ Regular\ 12
+    " set guifont=Fira Code\ Regular\ 12
 
     " Display more of the file by default.
     " Hide the toolbar.
