@@ -44,11 +44,21 @@ set formatoptions=qrn1
 
 " }}}
 
+" BACKUP ------------------------------------------------------------- {{{
+
+set swapfile
+set undofile
+set undoreload=10000
+set backupdir=~/.vim/tmp/backup//
+set directory=~/.vim/tmp/swap//
+set undodir=~/.vim/tmp/undo//
+
+" }}}
+
 " SEARCH ------------------------------------------------------------- {{{
 
 nnoremap / /\v
 vnoremap / /\v
-set nobackup
 set incsearch
 set ignorecase
 set smartcase
@@ -89,7 +99,6 @@ let g:airline_powerline_fonts = 1
 
 " MAPPINGS --------------------------------------------------------------- {{{
 
-"let mapleader
 inoremap jj <Esc>
 nnoremap <space> :
 nnoremap <leader><space> :noh<cr>
@@ -115,7 +124,7 @@ noremap <c-right> <c-w><
 " }}}
 
 " VIMSCRIPT -------------------------------------------------------------- {{{
-
+"
 augroup filetype_vim
     autocmd!
     autocmd FileType vim setlocal foldmethod=marker
@@ -124,36 +133,10 @@ augroup END
 autocmd Filetype html setlocal tabstop=2 shiftwidth=2 expandtab
 autocmd Filetype c setlocal tabstop=2 shiftwidth=2 expandtab
 
-if version >= 703
-    set undodir=~/.vim/backup
-    set undofile
-    set undoreload=10000
-endif
-
-" Display cursorline and cursorcolumn ONLY in active window.
 augroup cursor_off
     autocmd!
     autocmd WinLeave * set nocursorline nocursorcolumn
     autocmd WinEnter * set cursorline cursorcolumn
 augroup END
-
-" }}}
-
-" STATUS LINE ------------------------------------------------------------ {{{
-
-" Clear status line when vimrc is reloaded.
-set statusline=
-
-" Status line left side.
-set statusline+=\ %F\ %M\ %Y\ %R
-
-" Use a divider to separate the left side from the right side.
-set statusline+=%=
-
-" Status line right side.
-set statusline+=\ ascii:\ %b\ hex:\ 0x%B\ row:\ %l\ col:\ %c\ percent:\ %p%%
-
-" Show the status on the second to last line.
-set laststatus=2
 
 " }}}
