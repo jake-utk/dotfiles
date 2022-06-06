@@ -11,12 +11,15 @@
 
 set nocompatible
 set modelines=0
-filetype on
-filetype plugin on
-filetype indent on
-syntax on
 set number
 set cursorline
+
+augroup cursor_off
+    autocmd!
+    autocmd WinLeave * set nocursorline nocursorcolumn
+    autocmd WinEnter * set cursorline cursorcolumn
+augroup END
+
 set shiftwidth=4
 set tabstop=4
 set softtabstop=4
@@ -29,7 +32,6 @@ set showmode
 set hidden
 set wildmenu
 set wildmode=list:longest
-set visualbell
 set ttyfast
 set ruler
 set backspace=indent,eol,start
@@ -41,6 +43,10 @@ set wrap
 set textwidth=79
 set formatoptions=qrn1
 "set colorcolumn=100
+augroup filetype_vim
+    autocmd!
+    autocmd FileType vim setlocal foldmethod=marker
+augroup END
 
 " }}}
 
@@ -70,9 +76,15 @@ set wildignore=*.docx,*.jpg,*.png,*.gif,*.pdf,*.pyc,*.exe,*.flv,*.img,*.xlsx
 
 " }}}
 
-" BACKGROUND ------------------------------------------------------------- {{{
+" COLORSCHEME & SYNTAX  ------------------------------------------------------------- {{{
+
+filetype on
+filetype plugin on
+filetype indent on
+syntax on
 
 colorscheme codedark
+
 hi Normal ctermbg=NONE guibg=NONE
 hi LineNr ctermbg=NONE guibg=NONE
 hi SignColumn ctermbg=NONE guibg=NONE
@@ -80,6 +92,33 @@ hi CursorLine ctermbg=NONE guibg=NONE
 hi CursorColumn ctermbg=NONE guibg=NONE
 hi EndOfBuffer ctermbg=NONE guibg=NONE
 hi Visual ctermbg=4
+
+autocmd Filetype html setlocal tabstop=2 shiftwidth=2 expandtab
+autocmd Filetype c setlocal tabstop=2 shiftwidth=2 expandtab
+
+"call <sid>hi('pythonStatement', s:cdBlue, {}, 'none', {})
+"call <sid>hi('pythonOperator', s:cdBlue, {}, 'none', {})
+"call <sid>hi('pythonException', s:cdPink, {}, 'none', {})
+"call <sid>hi('pythonExClass', s:cdBlueGreen, {}, 'none', {})
+"call <sid>hi('pythonBuiltinObj', s:cdLightBlue, {}, 'none', {})
+"call <sid>hi('pythonBuiltinType', s:cdBlueGreen, {}, 'none', {})
+"call <sid>hi('pythonTodo', s:cdBlue, {}, 'none', {})
+
+augroup python
+    autocmd!
+    autocmd FileType python syn keyword pythonStatement class nextgroup=pythonClass skipwhite
+    autocmd FileType python syn match pythonClass "\%(\%(class\s\)\s*\)\@<=\h\%(\w\|\.\)*" contained nextgroup=pythonClassVars
+                \ | highlight def link pythonClass pythonClassDef
+    autocmd Filetype python syn region pythonClassVars start="(" end=")" contained contains=pythonClassParameters transparent keepend
+    autocmd FileType python syn match pythonClassParameters "[^,\*]*" contained contains=pythonBuiltin,pythonBuiltinObj,pythonBuiltinType,pythonExtraOperatorpythonStatement,pythonBrackets,pythonString,pythonComment skipwhite
+                \ | highlight def link pythonClassParameters pythonClassVar
+    autocmd FileType python syn keyword pythonNone        None
+                \ | highlight def link pythonNone pythonNone
+    autocmd FileType python syn keyword pythonBoolean     True False
+                \ | highlight def link pythonBoolean pythonBoolean
+    "autocmd FileType python syn keyword pythonBuiltinObj  __debug__ __doc__ __file__ __name__ __package__
+    "autocmd FileType python syn keyword pythonBuiltinObj  __loader__ __spec__ __path__ __cached__
+augroup end
 
 " }}}
 
@@ -123,20 +162,3 @@ noremap <c-right> <c-w><
 
 " }}}
 
-" VIMSCRIPT -------------------------------------------------------------- {{{
-"
-augroup filetype_vim
-    autocmd!
-    autocmd FileType vim setlocal foldmethod=marker
-augroup END
-
-autocmd Filetype html setlocal tabstop=2 shiftwidth=2 expandtab
-autocmd Filetype c setlocal tabstop=2 shiftwidth=2 expandtab
-
-augroup cursor_off
-    autocmd!
-    autocmd WinLeave * set nocursorline nocursorcolumn
-    autocmd WinEnter * set cursorline cursorcolumn
-augroup END
-
-" }}}
