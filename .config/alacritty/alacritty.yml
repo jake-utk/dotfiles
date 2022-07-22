@@ -1,7 +1,6 @@
 # Configuration for Alacritty, the GPU enhanced terminal emulator.
 
 
-
 window:
   opacity: 0.75
   padding:
@@ -24,3 +23,7 @@ shell:
   program: /bin/zsh
   args:
     - --login
+
+env:
+    TERM: xterm-256color
+
