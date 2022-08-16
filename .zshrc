@@ -67,3 +67,12 @@ if [[ $(echo $HOST | cut -d "." -f 1 | tail -c 6) == "MBP16" ]]; then
     echo "Welcome back, $USER!"
     # echo "$(tenure)"
 fi
+
+# MacOS tmux-256color $TERM type
+export TERMINFO_DIRS=$TERMINFO_DIRS:$HOME/.local/share/terminfo
+
+# ripgrep configuration
+if type rg &> /dev/null; then
+    export FZF_DEFAULT_COMMAND='rg --files --hidden'
+    export FZF_DEFAULT_OPS='-m --height 50% --border'
+fi
