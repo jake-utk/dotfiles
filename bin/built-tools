@@ -1,11 +1,6 @@
 #!/bin/bash
 
 
-# NOTE:  If your built-tools repo isn't in $HOME/dev/, you can adjust the conditional in get_tools_dir_path to speed up the program significantly.
-
-#TODO
-# Verify correct git branch is checked out
-
 display_help() {
     echo "Access built-tools from anywhere!"
     echo "Usage:"
@@ -25,11 +20,13 @@ get_tools_dir_path() {
 }
 
 built_tools_wrapper() {
-    bin/built extract lender $1 --single-stack $2
+    # --single-stack flag seems to do nothing but does override --output-file
+    # for lack of time, I'm including both for now
+    bin/built extract lender $1 --single-stack $2 --output-file $2 --saml-cred-file $HOME/.aws/prod-integrations
 }
 
 built_tools_wrapper_no_loans() {
-    bin/built extract lender $1 -l -a -p --skip-loans --output-file $2
+    bin/built extract lender $1 -l -a -p --skip-loans --single-stack $2 --output-file $2 --saml-cred-file $HOME/.aws/prod-integrations
 }
 
 main() {
