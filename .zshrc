@@ -54,3 +54,9 @@ alias myip="curl http://ipecho.net/plain; echo"
 if [[ $(uname -r | sed "s/[^[:alpha:]]//g") == "arch" ]]; then
     source $HOME/.bash_aliases
 fi
+
+# FZF use ripgrep
+if type rg &> /dev/null; then
+    export FZF_DEFAULT_COMMAND='rg --hidden --files'
+    #export FZF_DEFAULT_OPTS='-m --height 50% --border'
+fi
