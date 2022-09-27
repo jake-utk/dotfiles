@@ -126,14 +126,12 @@ augroup end
 
 let NERDTreeShowHidden=1
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-nnoremap <leader>n :NERDTreeFocus<CR>
-nnoremap <C-n> :NERDTree<CR>
-nnoremap <leader>t :NERDTreeToggle<CR>
-nnoremap <C-f> :NERDTreeFind<CR>
 let g:NERDCreateDefaultMappings = 1
 let g:airline_theme = 'codedark'
 let g:airline_powerline_fonts = 1
-
+let g:airline#extensions#ale#enabled = 1
+set rtp+=/usr/bin/fzf
+let g:fzf_preview_window = ['right:50%', 'CTRL-/']
 " }}}
 
 " MAPPINGS --------------------------------------------------------------- {{{
@@ -159,6 +157,14 @@ noremap <c-up> <c-w>+
 noremap <c-down> <c-w>-
 noremap <c-left> <c-w>>
 noremap <c-right> <c-w><
+
+" NERDTree
+nnoremap <leader>t :NERDTree %<CR>
+nnoremap <leader>T :NERDTreeToggle<CR>
+
+" FZF
+noremap <leader>F :Files<cr>
+noremap <leader>f :Rg<cr>
 
 " }}}
 
