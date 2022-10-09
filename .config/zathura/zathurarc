@@ -12,7 +12,11 @@ set statusbar-home-tilde true
 
 set page-padding 1
 
-set font "Fira Code 12"
+set font "Fira Code Bold 12"
 
 set default-bg "#000000BF"
+set statusbar-bg "#000000BF"
+set statusbar-fg "#f78538"
+set inputbar-bg "#000000BF"
+set inputbar-fg "#f78538"
 set recolor-lightcolor "rgba(25,25,25,.65)"
