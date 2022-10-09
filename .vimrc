@@ -132,6 +132,10 @@ let g:airline_powerline_fonts = 1
 let g:airline#extensions#ale#enabled = 1
 set rtp+=/usr/bin/fzf
 let g:fzf_preview_window = ['right:50%', 'CTRL-/']
+let g:vimtex_view_method = 'zathura'
+
+" 
+
 " }}}
 
 " MAPPINGS --------------------------------------------------------------- {{{
