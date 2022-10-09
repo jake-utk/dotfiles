@@ -133,6 +133,7 @@ let g:airline#extensions#ale#enabled = 1
 set rtp+=/usr/bin/fzf
 let g:fzf_preview_window = ['right:50%', 'CTRL-/']
 let g:vimtex_view_method = 'zathura'
+let g:vimtex_view_forward_search_on_start = 0
 
 " 
 

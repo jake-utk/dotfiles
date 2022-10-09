@@ -9,14 +9,19 @@ set recolor "true"
 set selection-clipboard clipboard
 set window-title-home-tilde true
 set statusbar-home-tilde true
+set guioptions none 
 
 set page-padding 1
 
 set font "Fira Code Bold 12"
 
-set default-bg "#000000BF"
+set default-bg "rgba(25,25,25,.65)"
+set recolor-lightcolor "rgba(25,25,25,.05)"
+
 set statusbar-bg "#000000BF"
 set statusbar-fg "#f78538"
 set inputbar-bg "#000000BF"
 set inputbar-fg "#f78538"
-set recolor-lightcolor "rgba(25,25,25,.65)"
+
+set highlight-active-color "#f78538"
+set highlight-color "#818589" 
