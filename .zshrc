@@ -33,14 +33,18 @@ venv_info() {
     [[ -n "$venv" ]] && echo "[%B%F{2}🐍%f%b|%B%F{208}$version%f%b|%B%F{10}$venv%f%b] "
 }
 
+ssh_info() {
+    [[ -n "$SSH_CONNECTION" ]] && echo "[%F{011}🔑%f|%B%F{208}ssh%f%b|%B%F{014}%m%f%b] "
+}
+
 # disable default virtualenv prompt
 export VIRTUAL_ENV_DISABLE_PROMPT=1
 
 # for adjustment of git-prompt, see $HOME/.oh-my-zsh/plugins/git-prompt.plugin.zsh
-PROMPT='%(?.%F{green}√.%F{red}✗)%f%(1j. ⚙.) $(venv_info)%B%F{240}%1~%f%b $(git_super_status)%# '
+PROMPT='%(?.%F{green}√.%F{red}✗)%f%(1j. ⚙.) $(ssh_info)$(venv_info)%B%F{240}%1~%f%b $(git_super_status)%# '
 
 # display battery info for laptop
-if [[ $HOST == 'arch-thinkpad' ]]; then
+if [[ $HOST == 'thinkpad' ]]; then
     RPROMPT='%* $(battery_pct_prompt)'
 else
     RPROMPT='%*'
@@ -58,5 +62,4 @@ fi
 # FZF use ripgrep
 if type rg &> /dev/null; then
     export FZF_DEFAULT_COMMAND='rg --hidden --files'
-    #export FZF_DEFAULT_OPTS='-m --height 50% --border'
 fi
