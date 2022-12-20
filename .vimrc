@@ -84,7 +84,6 @@ filetype indent on
 syntax on
 
 colorscheme codedark
-
 hi Normal ctermbg=NONE guibg=NONE
 hi LineNr ctermbg=NONE guibg=NONE
 hi SignColumn ctermbg=NONE guibg=NONE
@@ -94,15 +93,6 @@ hi EndOfBuffer ctermbg=NONE guibg=NONE
 hi Visual ctermbg=4
 
 autocmd Filetype html setlocal tabstop=2 shiftwidth=2 expandtab
-autocmd Filetype c setlocal tabstop=2 shiftwidth=2 expandtab
-
-"call <sid>hi('pythonStatement', s:cdBlue, {}, 'none', {})
-"call <sid>hi('pythonOperator', s:cdBlue, {}, 'none', {})
-"call <sid>hi('pythonException', s:cdPink, {}, 'none', {})
-"call <sid>hi('pythonExClass', s:cdBlueGreen, {}, 'none', {})
-"call <sid>hi('pythonBuiltinObj', s:cdLightBlue, {}, 'none', {})
-"call <sid>hi('pythonBuiltinType', s:cdBlueGreen, {}, 'none', {})
-"call <sid>hi('pythonTodo', s:cdBlue, {}, 'none', {})
 
 augroup python
     autocmd!
@@ -116,26 +106,34 @@ augroup python
                 \ | highlight def link pythonNone pythonNone
     autocmd FileType python syn keyword pythonBoolean     True False
                 \ | highlight def link pythonBoolean pythonBoolean
-    "autocmd FileType python syn keyword pythonBuiltinObj  __debug__ __doc__ __file__ __name__ __package__
-    "autocmd FileType python syn keyword pythonBuiltinObj  __loader__ __spec__ __path__ __cached__
 augroup end
 
-" }}}
 
 " PLUGINS ---------------------------------------------------------------- {{{
 
+" NERDTree
 let NERDTreeShowHidden=1
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 let g:NERDCreateDefaultMappings = 1
+
+" Airline
 let g:airline_theme = 'codedark'
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#ale#enabled = 1
+
+" FZF
 set rtp+=/usr/bin/fzf
 let g:fzf_preview_window = ['right:50%', 'CTRL-/']
+
+" VimTeX
 let g:vimtex_view_method = 'zathura'
 let g:vimtex_view_forward_search_on_start = 0
 
-" 
+" Gutentags
+let g:gutentags_modules = ['ctags', 'gtags_cscope'] " Requires gutentags_plus
+let g:gutentags_project_root = ['.root'] " can add .root to non-git tracked project
+let g:gutentags_cache_dir = expand('~/.cache/tags')
+let g:gutentags_plus_switch = 1 " change focus to quickfix window after search (optional).
 
 " }}}
 
