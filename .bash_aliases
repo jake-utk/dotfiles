@@ -1,8 +1,2 @@
-alias vpn="protonvpn-cli"
-alias vpn:status="protonvpn-cli s"
-alias vpn:up="protonvpn-cli connect -f"
-alias vpn:down="protonvpn-cli disconnect"
-alias vpn:refresh="vpn:down && vpn:up"
-alias sandbox="code $HOME/dev/sandbox"
 alias dotfiles="/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME"
 alias rm="rm -i"
