@@ -1,0 +1,14 @@
+[user]
+	email = github@jakeaddis.com
+	name = Jake Addis
+[merge]
+    tool = vimdiff
+[core]
+    editor = vim
+    pager = less -FRX
+[color]
+    ui = auto
+[alias]
+    logd = "log --oneline --decorate --graph -15"
+    st = "status -sb"
+    alias = "config --get-regexp ^alias\\."
