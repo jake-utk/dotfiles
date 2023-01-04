@@ -14,6 +14,9 @@ set modelines=0
 set number
 set cursorline
 
+autocmd FileType c,cpp,py,js,ts,md,tex autocmd BufWritePre <buffer> %s/\s\+$//e
+autocmd FileType c,cpp,py packadd termdebug
+
 augroup cursor_off
     autocmd!
     autocmd WinLeave * set nocursorline nocursorcolumn
@@ -108,8 +111,13 @@ augroup python
                 \ | highlight def link pythonBoolean pythonBoolean
 augroup end
 
+" }}}
 
 " PLUGINS ---------------------------------------------------------------- {{{
+
+" TermDebug
+let g:termdebug_popup = 0
+let g:termdebug_wide = 163
 
 " NERDTree
 let NERDTreeShowHidden=1
@@ -144,7 +152,6 @@ nnoremap <space> :
 nnoremap <leader><space> :noh<cr>
 nnoremap <tab> %
 vnoremap <tab> %
-nnoremap <leader>W :%s/\s\+$//<cr>:let @/=''<CR>
 nnoremap <leader>v V`]
 nnoremap <leader>w <C-w>v<C-w>h
 nnoremap <leader>h <C-w>s
