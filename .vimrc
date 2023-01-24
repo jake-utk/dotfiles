@@ -115,6 +115,14 @@ augroup end
 
 " PLUGINS ---------------------------------------------------------------- {{{
 
+" ALE
+let g:ale_c_cc_options = '-std=c11'
+let g:ale_c_cppcheck_options = '--template "{file}({line}): {severity} ({id}): {message}"'
+let g:ale_c_cpplint_options = '--filter=-readability/casting,-runtime/threadsafe_fn'
+let g:ale_cpp_cc_options = '-std=c++20'
+let g:ale_cpp_cppcheck_options = '--template "{file}({line}): {severity} ({id}): {message}"'
+let g:ale_cpp_cpplint_options = '--filter=-build/header_guard'
+
 " TermDebug
 let g:termdebug_popup = 0
 let g:termdebug_wide = 163
