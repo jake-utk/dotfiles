@@ -1,0 +1,7 @@
+[user]
+	email = github@jakeaddis.com
+	name = jake-utk
+[core]
+	editor = vim --nofork
+[init]
+	defaultBranch = main
