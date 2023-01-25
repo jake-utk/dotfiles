@@ -1,7 +1,16 @@
 [user]
-	email = github@jakeaddis.com
-	name = jake-utk
+    email = github@jakeaddis.com
+    name = jake-utk
+[merge]
+    tool = vimdiff
 [core]
-	editor = vim --nofork
+    editor = vim --nofork
+    pager = less -FRX
+[color]
+    ui = auto
+[alias]
+    logd = "log --oneline --decorate --graph -15"
+    st = "status -sb"
+    alias = "config --get-regexp ^alias\\."
 [init]
 	defaultBranch = main
