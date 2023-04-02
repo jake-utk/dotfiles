@@ -19,7 +19,11 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
 
 # setup zsh plugins
-plugins=(git git-prompt battery zsh-autosuggestions zsh-syntax-highlighting)
+plugins=(git
+         git-prompt
+         battery
+         zsh-autosuggestions
+         zsh-syntax-highlighting)
 source $ZSH/oh-my-zsh.sh
 
 venv_info() {
@@ -50,16 +54,11 @@ else
     RPROMPT='%*'
 fi
 
-# mutual aliases
-alias hs="history | grep"
-alias myip="curl http://ipecho.net/plain; echo"
+source $HOME/.bash_aliases
 
-# arch linux aliases
-if [[ $(uname -r | sed "s/[^[:alpha:]]//g") == "arch" ]]; then
-    source $HOME/.bash_aliases
-fi
-
-# FZF use ripgrep
+# fzf
+source /usr/share/fzf/key-bindings.zsh
+source /usr/share/fzf/completion.zsh
 if type rg &> /dev/null; then
     export FZF_DEFAULT_COMMAND='rg --hidden --files'
 fi
