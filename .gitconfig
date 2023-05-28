@@ -1,6 +1,6 @@
 [user]
-	email = github@jakeaddis.com
-	name = Jake Addis
+    email = github@jakeaddis.com
+    name = Jake Addis
 [merge]
     tool = vimdiff
 [core]
