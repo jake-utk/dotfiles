@@ -13,22 +13,34 @@ set nocompatible
 set modelines=0
 set number
 set cursorline
+set nocursorcolumn
 
-autocmd FileType c,cpp,py,js,ts,md,tex autocmd BufWritePre <buffer> %s/\s\+$//e
-autocmd FileType c,cpp,py packadd termdebug
+autocmd FileType c,cpp,py,js,jsx,ts,tsx,md,tex autocmd BufWritePre <buffer> %s/\s\+$//e
+autocmd BufNewFile,BufRead *.py
+            \ set tabstop=4
+            \ softtabstop=4
+            \ shiftwidth=4
+            \ textwidth=79
+autocmd BufNewFile,BufRead {*.js,*.jsx,*.ts,*.tsx,*.html,*.css}
+            \ set tabstop=2
+            \ softtabstop=2
+            \ shiftwidth=2
+            \ textwidth=99
+autocmd BufNewFile,BufRead {*.c,*.cpp}
+            \ set tabstop=2
+            \ softtabstop=2
+            \ shiftwidth=2
+            \ textwidth=79
+autocmd BufNewFile,BufRead {*.tex,*.md}
+            \ set tabstop=4
+            \ softtabstop=4
+            \ shiftwidth=4
+            \ textwidth=99
 
-augroup cursor_off
-    autocmd!
-    autocmd WinLeave * set nocursorline nocursorcolumn
-    autocmd WinEnter * set cursorline cursorcolumn
-augroup END
-
-set shiftwidth=4
-set tabstop=4
-set softtabstop=4
 set expandtab
-set encoding=utf-8
+set fileformat=unix
 set autoindent
+set encoding=utf-8
 set scrolloff=10
 set showcmd
 set showmode
@@ -39,19 +51,12 @@ set ttyfast
 set ruler
 set backspace=indent,eol,start
 set laststatus=2
-
-" WRAP ------------------------------------------------------------- {{{
-
 set wrap
-set textwidth=79
 set formatoptions=qrn1
-"set colorcolumn=100
 augroup filetype_vim
     autocmd!
     autocmd FileType vim setlocal foldmethod=marker
 augroup END
-
-" }}}
 
 " BACKUP ------------------------------------------------------------- {{{
 
@@ -79,51 +84,36 @@ set wildignore=*.docx,*.jpg,*.png,*.gif,*.pdf,*.pyc,*.exe,*.flv,*.img,*.xlsx
 
 " }}}
 
-" COLORSCHEME & SYNTAX  ------------------------------------------------------------- {{{
-
-filetype on
-filetype plugin on
-filetype indent on
-syntax on
-
-colorscheme codedark
-hi Normal ctermbg=NONE guibg=NONE
-hi LineNr ctermbg=NONE guibg=NONE
-hi SignColumn ctermbg=NONE guibg=NONE
-hi CursorLine ctermbg=NONE guibg=NONE
-hi CursorColumn ctermbg=NONE guibg=NONE
-hi EndOfBuffer ctermbg=NONE guibg=NONE
-hi Visual ctermbg=4
-
-autocmd Filetype html setlocal tabstop=2 shiftwidth=2 expandtab
-
-augroup python
-    autocmd!
-    autocmd FileType python syn keyword pythonStatement class nextgroup=pythonClass skipwhite
-    autocmd FileType python syn match pythonClass "\%(\%(class\s\)\s*\)\@<=\h\%(\w\|\.\)*" contained nextgroup=pythonClassVars
-                \ | highlight def link pythonClass pythonClassDef
-    autocmd Filetype python syn region pythonClassVars start="(" end=")" contained contains=pythonClassParameters transparent keepend
-    autocmd FileType python syn match pythonClassParameters "[^,\*]*" contained contains=pythonBuiltin,pythonBuiltinObj,pythonBuiltinType,pythonExtraOperatorpythonStatement,pythonBrackets,pythonString,pythonComment skipwhite
-                \ | highlight def link pythonClassParameters pythonClassVar
-    autocmd FileType python syn keyword pythonNone        None
-                \ | highlight def link pythonNone pythonNone
-    autocmd FileType python syn keyword pythonBoolean     True False
-                \ | highlight def link pythonBoolean pythonBoolean
-augroup end
-
-" }}}
-
 " PLUGINS ---------------------------------------------------------------- {{{
 
 " ALE
+let g:ale_enabled = 1
+let g:ale_fix_on_save = 1
+let g:ale_fixers = {
+\   '*': ['trim_whitespace', 'remove_trailing_lines'],
+\   'python': ['yapf', 'isort'],
+\   'javascript': ['prettier'],
+\   'typescript': ['prettier'],
+\   'javascriptreact': ['prettier'],
+\   'typescriptreact': ['prettier'],
+\   'css': ['prettier'],
+\   'json': ['prettier'],
+\}
+let g:ale_linters = {
+\    'python': ['flake8', 'pylint', 'mypy'],
+\    'c': ['cc'],
+\}
+" C
 let g:ale_c_cc_options = '-std=c11'
 let g:ale_c_cppcheck_options = '--template "{file}({line}): {severity} ({id}): {message}"'
 let g:ale_c_cpplint_options = '--filter=-readability/casting,-runtime/threadsafe_fn'
-let g:ale_cpp_cc_options = '-std=c++20'
+" C++
+let g:ale_cpp_cc_options = '-std=c++14'
 let g:ale_cpp_cppcheck_options = '--template "{file}({line}): {severity} ({id}): {message}"'
 let g:ale_cpp_cpplint_options = '--filter=-build/header_guard'
 
 " TermDebug
+autocmd FileType c,cpp,py packadd termdebug
 let g:termdebug_popup = 0
 let g:termdebug_wide = 163
 
@@ -142,14 +132,24 @@ set rtp+=/usr/bin/fzf
 let g:fzf_preview_window = ['right:50%', 'CTRL-/']
 
 " VimTeX
-let g:vimtex_view_method = 'zathura'
+if executable('zathura')
+  let g:vimtex_view_method = 'zathura'
+endif
 let g:vimtex_view_forward_search_on_start = 0
 
-" Gutentags
-let g:gutentags_modules = ['ctags', 'gtags_cscope'] " Requires gutentags_plus
-let g:gutentags_project_root = ['.root'] " can add .root to non-git tracked project
-let g:gutentags_cache_dir = expand('~/.cache/tags')
-let g:gutentags_plus_switch = 1 " change focus to quickfix window after search (optional).
+" }}}
+
+" COLORSCHEME & SYNTAX  ------------------------------------------------------------- {{{
+
+autocmd VimEnter * set termguicolors
+filetype on
+filetype plugin on
+filetype indent on
+syntax on
+
+autocmd BufRead,BufNewFile *.py let python_highlight_all=1
+let g:codedark_term256=1
+colorscheme codedark
 
 " }}}
 
