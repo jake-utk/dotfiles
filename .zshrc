@@ -26,6 +26,10 @@ plugins=(git
          zsh-syntax-highlighting)
 source $ZSH/oh-my-zsh.sh
 
+async_git_super_status() {
+    git_super_status &
+}
+
 venv_info() {
     if [[ -n "$VIRTUAL_ENV" ]]; then
         venv="${VIRTUAL_ENV##*/}"
@@ -45,7 +49,7 @@ ssh_info() {
 export VIRTUAL_ENV_DISABLE_PROMPT=1
 
 # for adjustment of git-prompt, see $HOME/.oh-my-zsh/plugins/git-prompt.plugin.zsh
-PROMPT='%(?.%F{green}√.%F{red}✗)%f%(1j. ⚙.) $(ssh_info)$(venv_info)%B%F{240}%1~%f%b $(git_super_status)%# '
+PROMPT='%(?.%F{green}√.%F{red}✗)%f%(1j. ⚙.) $(ssh_info)$(venv_info)%B%F{240}%1~%f%b $(async_git_super_status)%# '
 
 # display battery info for laptop
 if [[ $HOST == 'thinkpad' ]]; then

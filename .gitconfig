@@ -1,10 +1,10 @@
 [user]
     email = github@jakeaddis.com
-    name = jake-utk
+    name = Jake Addis
 [merge]
     tool = vimdiff
 [core]
-    editor = vim --nofork
+    editor = vim
     pager = less -FRX
 [color]
     ui = auto
