@@ -152,12 +152,21 @@ endif
 let g:vimtex_view_forward_search_on_start = 0
 
 " Gutentags
+let g:gutentags_enabled = 1
+let g:gutentags_plus_enabled = 1
+"let g:gutentags_add_default_project_roots = 0
+let g:gutentags_project_root = ['package.json', '.git', '.root', 'Pipfile']
+let g:gutentags_ctags_executable = '/usr/bin/ctags'
 let g:gutentags_modules = ['ctags', 'gtags_cscope']
-let g:gutentags_project_root = ['.root']
 let g:gutentags_cache_dir = expand('~/.cache/tags')
-" change focus to quickfix window after search (optional).
-let g:gutentags_plus_switch = 1
-
+let g:gutentags_generate_on_new = 1
+let g:gutentags_generate_on_missing = 1
+let g:gutentags_generate_on_write = 1
+let g:gutentags_generate_on_empty_buffer = 0
+let g:gutentags_ctags_extra_args = [
+      \ '--tag-relative=yes',
+      \ '--fields=+ailmnS',
+      \ ]
 " }}}
 
 " COLORSCHEME & SYNTAX  ------------------------------------------------------------- {{{
