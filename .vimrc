@@ -60,10 +60,14 @@ augroup END
 
 " BACKUP ------------------------------------------------------------- {{{
 
+" Disabling backups for coc.nvim
+set nobackup
+set nowritebackup
+
 set swapfile
 set undofile
 set undoreload=10000
-set backupdir=~/.vim/tmp/backup//
+"set backupdir=~/.vim/tmp/backup//
 set directory=~/.vim/tmp/swap//
 set undodir=~/.vim/tmp/undo//
 
@@ -86,6 +90,9 @@ set wildignore=*.docx,*.jpg,*.png,*.gif,*.pdf,*.pyc,*.exe,*.flv,*.img,*.xlsx
 
 " PLUGINS ---------------------------------------------------------------- {{{
 
+" COC
+source ~/.vim/coc-settings.vim
+
 " ALE
 let g:ale_enabled = 1
 let g:ale_fix_on_save = 1
@@ -100,8 +107,15 @@ let g:ale_fixers = {
 \   'json': ['prettier'],
 \}
 let g:ale_linters = {
-\    'python': ['flake8', 'pylint', 'mypy'],
-\    'c': ['cc'],
+\   'python': ['flake8', 'pylint', 'mypy'],
+\   'c': ['cc', 'cpplint'],
+\   'cpp': ['cpplint'],
+\   'javascript': ['eslint'],
+\   'typescript': ['eslint'],
+\   'javascriptreact': ['eslint'],
+\   'typescriptreact': ['eslint'],
+\   'css': ['eslint'],
+\   'json': ['eslint'],
 \}
 " C
 let g:ale_c_cc_options = '-std=c11'
@@ -136,6 +150,13 @@ if executable('zathura')
   let g:vimtex_view_method = 'zathura'
 endif
 let g:vimtex_view_forward_search_on_start = 0
+
+" Gutentags
+let g:gutentags_modules = ['ctags', 'gtags_cscope']
+let g:gutentags_project_root = ['.root']
+let g:gutentags_cache_dir = expand('~/.cache/tags')
+" change focus to quickfix window after search (optional).
+let g:gutentags_plus_switch = 1
 
 " }}}
 
