@@ -12,7 +12,6 @@
 set nocompatible
 set modelines=0
 set number
-set cursorline
 set nocursorcolumn
 
 autocmd FileType c,cpp,py,js,jsx,ts,tsx,md,tex autocmd BufWritePre <buffer> %s/\s\+$//e
@@ -98,7 +97,7 @@ let g:ale_enabled = 1
 let g:ale_fix_on_save = 1
 let g:ale_fixers = {
 \   '*': ['trim_whitespace', 'remove_trailing_lines'],
-\   'python': ['yapf', 'isort'],
+\   'python': ['black', 'isort'],
 \   'javascript': ['prettier'],
 \   'typescript': ['prettier'],
 \   'javascriptreact': ['prettier'],
@@ -107,7 +106,7 @@ let g:ale_fixers = {
 \   'json': ['prettier'],
 \}
 let g:ale_linters = {
-\   'python': ['flake8', 'pylint', 'mypy'],
+\   'python': ['ruff', 'mypy'],
 \   'c': ['cc', 'cpplint'],
 \   'cpp': ['cpplint'],
 \   'javascript': ['eslint'],
@@ -214,6 +213,9 @@ nnoremap <leader>T :NERDTreeToggle<CR>
 " FZF
 noremap <leader>F :Files<cr>
 noremap <leader>f :Rg<cr>
+
+" COC
+nmap gd <Plug>(coc-definition)
 
 " }}}
 
