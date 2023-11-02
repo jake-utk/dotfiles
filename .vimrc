@@ -12,7 +12,6 @@
 set nocompatible
 set modelines=0
 set number
-set cursorline
 set nocursorcolumn
 
 autocmd FileType c,cpp,py,js,jsx,ts,tsx,md,tex autocmd BufWritePre <buffer> %s/\s\+$//e
@@ -60,10 +59,14 @@ augroup END
 
 " BACKUP ------------------------------------------------------------- {{{
 
+" Disabling backups for coc.vim
+set nobackup
+set nowritebackup
+
 set swapfile
 set undofile
 set undoreload=10000
-set backupdir=~/.vim/tmp/backup//
+"set backupdir=~/.vim/tmp/backup//
 set directory=~/.vim/tmp/swap//
 set undodir=~/.vim/tmp/undo//
 
@@ -86,12 +89,15 @@ set wildignore=*.docx,*.jpg,*.png,*.gif,*.pdf,*.pyc,*.exe,*.flv,*.img,*.xlsx
 
 " PLUGINS ---------------------------------------------------------------- {{{
 
+" COC
+source ~/.vim/coc-settings.vim
+
 " ALE
 let g:ale_enabled = 1
 let g:ale_fix_on_save = 1
 let g:ale_fixers = {
 \   '*': ['trim_whitespace', 'remove_trailing_lines'],
-\   'python': ['yapf', 'isort'],
+\   'python': ['black', 'isort'],
 \   'javascript': ['prettier'],
 \   'typescript': ['prettier'],
 \   'javascriptreact': ['prettier'],
@@ -100,8 +106,15 @@ let g:ale_fixers = {
 \   'json': ['prettier'],
 \}
 let g:ale_linters = {
-\    'python': ['flake8', 'pylint', 'mypy'],
-\    'c': ['cc'],
+\   'python': ['ruff', 'mypy'],
+\   'c': ['cc', 'cpplint'],
+\   'cpp': ['cpplint'],
+\   'javascript': ['eslint'],
+\   'typescript': ['eslint'],
+\   'javascriptreact': ['eslint'],
+\   'typescriptreact': ['eslint'],
+\   'css': ['eslint'],
+\   'json': ['eslint'],
 \}
 " C
 let g:ale_c_cc_options = '-std=c11'
@@ -149,6 +162,7 @@ syntax on
 
 autocmd BufRead,BufNewFile *.py let python_highlight_all=1
 let g:codedark_term256=1
+let g:codedark_transparent=1
 colorscheme codedark
 
 " }}}
@@ -183,6 +197,9 @@ nnoremap <leader>T :NERDTreeToggle<CR>
 " FZF
 noremap <leader>F :Files<cr>
 noremap <leader>f :Rg<cr>
+
+" COC
+nmap gd <Plug>(coc-definition)
 
 " }}}
 
