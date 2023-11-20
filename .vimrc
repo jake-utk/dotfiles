@@ -89,10 +89,8 @@ set wildignore=*.docx,*.jpg,*.png,*.gif,*.pdf,*.pyc,*.exe,*.flv,*.img,*.xlsx
 
 " PLUGINS ---------------------------------------------------------------- {{{
 
-" COC
-source ~/.vim/coc-settings.vim
-
 " ALE
+let g:ale_disable_lsp = 1
 let g:ale_enabled = 1
 let g:ale_fix_on_save = 1
 let g:ale_fixers = {
@@ -134,6 +132,7 @@ let g:termdebug_wide = 163
 let NERDTreeShowHidden=1
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 let g:NERDCreateDefaultMappings = 1
+let NERDTreeHighlightCursorline=0
 
 " Airline
 let g:airline_theme = 'codedark'
@@ -149,28 +148,22 @@ if executable('zathura')
   let g:vimtex_view_method = 'zathura'
 endif
 let g:vimtex_view_forward_search_on_start = 0
+let g:tex_flavor='latex'
+let g:vimtex_quickfix_mode=0
+set conceallevel=1
+let g:tex_conceal='abdmg'
 
-" Gutentags
-let g:gutentags_enabled = 1
-let g:gutentags_plus_enabled = 1
-"let g:gutentags_add_default_project_roots = 0
-let g:gutentags_project_root = ['package.json', '.git', '.root', 'Pipfile']
-let g:gutentags_ctags_executable = '/usr/bin/ctags'
-let g:gutentags_modules = ['ctags', 'gtags_cscope']
-let g:gutentags_cache_dir = expand('~/.cache/tags')
-let g:gutentags_generate_on_new = 1
-let g:gutentags_generate_on_missing = 1
-let g:gutentags_generate_on_write = 1
-let g:gutentags_generate_on_empty_buffer = 0
-let g:gutentags_ctags_extra_args = [
-      \ '--tag-relative=yes',
-      \ '--fields=+ailmnS',
-      \ ]
+" SLIMV
+let g:slimv_repl_split=4
+let g:slimv_repl_split_size=40
+
 " }}}
 
 " COLORSCHEME & SYNTAX  ------------------------------------------------------------- {{{
 
-autocmd VimEnter * set termguicolors
+" Below is commented out due to causing tmuxline discoloration when terinal
+" opened in VIM
+"autocmd VimEnter * set termguicolors
 filetype on
 filetype plugin on
 filetype indent on
@@ -213,9 +206,6 @@ nnoremap <leader>T :NERDTreeToggle<CR>
 " FZF
 noremap <leader>F :Files<cr>
 noremap <leader>f :Rg<cr>
-
-" COC
-nmap gd <Plug>(coc-definition)
 
 " }}}
 
