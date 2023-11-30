@@ -1,0 +1,31 @@
+#!/bin/bash
+
+battery_level=$(acpi | grep -oP '(?<=, )\d+(?=%)')
+last_state_file="/tmp/last_battery_notify_state"
+
+if [ -f "$last_state_file" ]; then
+  last_state=$(cat "$last_state_file")
+else
+  last_state=0
+fi
+
+notify_battery_level() {
+  target_level=$1
+  message=$2
+  if [ "$battery_level" -le "$target_level" ] && [ "$last_state" -gt "$target_level" ]; then
+    notify-send "$message Battery level is ${battery_level}%."
+    echo "$target_level" > "$last_state_file"
+  fi
+}
+
+# Check and notify
+notify_battery_level 5 "[BATTERY:CRITICAL]"
+notify_battery_level 25 "[BATTERY:LOW]"
+notify_battery_level 50 "[BATTERY:MEDIUM]"
+notify_battery_level 75 "[BATTERY:GOOD]"
+notify_battery_level 100 "[BATTERY:FULL]"
+
+# Update last state if battery level is higher than the previous state
+if [ "$battery_level" -gt "$last_state" ]; then
+  echo "$battery_level" > "$last_state_file"
+fi
