@@ -108,7 +108,7 @@ language_mapping=(
     ['yo']='Yoruba'
     ['zu']='Zulu')
 
-function gtr {
+gtr() {
   language_param=$1
   shift
 
