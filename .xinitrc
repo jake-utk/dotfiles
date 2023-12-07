@@ -23,6 +23,7 @@ if [ -f "$usermodmap" ]; then
     xmodmap "$usermodmap"
 fi
 
+# set keyboard options
 setxkbmap -option ctrl:nocaps
 
 # start some nice programs
