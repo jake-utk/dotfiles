@@ -16,7 +16,7 @@
 
 int main(int argc, char** argv) {
   char* settings[NUM_SETTINGS] = {
-    "0", "105", "210", "315", "420", "525", "630", "735", "840", "945", "1050"
+    "0", "106", "212", "318", "424", "530", "636", "742", "848", "954", "1060"
   };
   char buffer[MAX_BRIGHNESS_DIGITS + 1];  // Adds room for null terminator
   int new_settings_idx = INVALID_INDEX,
