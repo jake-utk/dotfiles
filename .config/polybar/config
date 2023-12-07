@@ -8,7 +8,7 @@
 ;==========================================================
 
 [colors]
-background=#1c2125
+background=#cc1c2125
 background-alt=#7488A6
 foreground=#dfdedf
 foreground-alt=#7488A6
@@ -52,7 +52,7 @@ type = internal/temperature
 interval = 0.5
 thermal-zone = 0
 base-temperature = 20
-warn-temperature = 80 
+warn-temperature = 80
 units = true
 format = <ramp><label>
 format-warn = <ramp><label-warn>
