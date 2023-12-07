@@ -9,12 +9,14 @@
 "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-set nocompatible
 set modelines=0
 set number
 set nocursorcolumn
+set nocursorline
 
-autocmd FileType c,cpp,py,js,jsx,ts,tsx,md,tex autocmd BufWritePre <buffer> %s/\s\+$//e
+autocmd FileType c,cpp,py,js,jsx,ts,tsx,md,tex,scm,rkt setlocal expandtab
+autocmd BufWritePre *.c,*.cpp,*.py,*.js,*.jsx,*.ts,*.tsx,*.md,*.tex,*.scm,*.rkt %s/\s\+$//e
+
 autocmd BufNewFile,BufRead *.py
             \ set tabstop=4
             \ softtabstop=4
@@ -36,7 +38,6 @@ autocmd BufNewFile,BufRead {*.tex,*.md}
             \ shiftwidth=4
             \ textwidth=99
 
-set expandtab
 set fileformat=unix
 set autoindent
 set encoding=utf-8
@@ -124,7 +125,7 @@ let g:ale_cpp_cppcheck_options = '--template "{file}({line}): {severity} ({id}):
 let g:ale_cpp_cpplint_options = '--filter=-build/header_guard'
 
 " TermDebug
-autocmd FileType c,cpp,py packadd termdebug
+autocmd FileType c,cpp packadd termdebug
 let g:termdebug_popup = 0
 let g:termdebug_wide = 163
 
@@ -206,6 +207,11 @@ nnoremap <leader>T :NERDTreeToggle<CR>
 " FZF
 noremap <leader>F :Files<cr>
 noremap <leader>f :Rg<cr>
+
+" Next buffer, previous buffer
+nnoremap <c-n> :bn<CR>
+nnoremap <c-p> :b#<CR>
+
 
 " }}}
 
