@@ -39,9 +39,10 @@ font-2="JetBrainsMono Nerd Font Mono:pixelsize=18:style=Medium,Regular;2"
 width=100%
 height=40
 offset-x=0
-modules-left=workspaces
+modules-left=workspaces ram temperature cpu
 modules-center=datetime
-modules-right=ram temperature cpu volume battery wireless-network wired-network network-activity
+; modules-right=vpn network-activity wireless-network wired-network volume battery
+modules-right=vpn network-activity wireless-network volume battery
 
 ; ==========================================
 ; modules
@@ -52,21 +53,24 @@ type = internal/temperature
 interval = 0.5
 thermal-zone = 0
 base-temperature = 20
-warn-temperature = 80
+warn-temperature = 170
 units = true
-format = <ramp><label>
-format-warn = <ramp><label-warn>
-format-prefix = " ["
-format-suffix = "] "
-format-warn-prefix = " ["
-format-warn-suffix = "] "
-label ="|%temperature-c%"
-label-warn ="|%temperature-c%"
+format = <ramp> <label>
+format-warn = <ramp> <label-warn>
+format-prefix = "| "
+format-suffix = " "
+format-warn-prefix = "| "
+format-warn-suffix = " "
+label ="%temperature-f%"
+label-warn ="%temperature-f%"
 ramp-0 = 
 ramp-1 = 
 ramp-2 = 
 ramp-3 = 
 ramp-4 = 
+ramp-2-foreground = "#FFFF00"
+ramp-3-foreground = "#FFA500"
+ramp-4-foreground = "#FF0000"
 
 
 [module/battery]
@@ -75,24 +79,29 @@ full-at = 99
 battery = BAT0
 adapter = AC
 poll-interval = 5
-format-charging-prefix = " ["
-format-charging-suffix = "] "
-format-discharging-prefix = " ["
-format-discharging-suffix = "] "
-format-full-prefix = " ["
-format-full-suffix = "] "
+format-charging-prefix = "| "
+format-charging-suffix = " "
+format-discharging-prefix = "| "
+format-discharging-suffix = " "
+format-full-prefix = "| "
+format-full-suffix = " "
 time-format = %H:%M
 format-charging = <animation-charging><label-charging>
 format-discharging = <ramp-capacity><label-discharging>
 format-full = <ramp-capacity><label-full>
-label-charging ="|%percentage%%"
-label-discharging ="|%percentage%%"
-label-full ="|100%"
+label-charging =" %percentage%%"
+label-discharging =" %percentage%%"
+label-full =" 100%"
 ramp-capacity-0 = 
 ramp-capacity-1 = 
 ramp-capacity-2 = 
 ramp-capacity-3 = 
 ramp-capacity-4 = 
+ramp-capacity-0-foreground = "#FF0000"
+ramp-capacity-1-foreground = "#FFFF00"
+ramp-capacity-2-foreground = "#dfdedf"
+ramp-capacity-3-foreground = "#dfdedf"
+ramp-capacity-4-foreground = "#00FF00"
 bar-capacity-width = 10
 animation-charging-0 = 
 animation-charging-1 = 
@@ -111,32 +120,33 @@ animation-discharging-framerate = 500
 type=internal/memory
 interval=0.5
 format=<label>
-format-prefix = " ["
-format-suffix = "] "
-label="|%gb_used%/%gb_total%"
+format-prefix = " "
+format-suffix = " "
+label=" %percentage_used%%"
+; label="|%gb_used%/%gb_total%"
 ; icon options: 
 
 [module/cpu]
 type=internal/cpu
 interval=0.5
 format=<label>
-format-prefix = " ["
-format-suffix = "] "
-label="|%percentage%%"
+format-prefix = "| "
+format-suffix = " "
+label=" %percentage%%"
 ; icon options:  ﬙ 
 
 [module/volume]
 type=internal/pulseaudio
 interval=5
 format-volume=<ramp-volume><label-volume>
-format-volume-prefix = " ["
-format-volume-suffix = "] "
-format-muted-prefix = " ["
-format-muted-suffix = "] "
+format-volume-prefix = "| "
+format-volume-suffix = " "
+format-muted-prefix = "| "
+format-muted-suffix = " "
 mapped=true
-label-volume="|%percentage%%"
+label-volume=" %percentage%%"
 format-muted=<label-muted>
-label-muted="|muted"
+label-muted=" muted"
 ramp-volume-0 = 
 ramp-volume-1 = 
 ramp-volume-2 = 
@@ -146,53 +156,58 @@ click-right = pavucontrol
 type=internal/network
 interface=wlan0
 interval=1.0
-format-connected = <label-connected>
-format-connected-prefix = " ["
-format-connected-suffix = "] "
+format-connected = <ramp-signal><label-connected>
+format-connected-prefix = "| "
+format-connected-suffix = " "
 format-disconnected = <label-disconnected>
-format-disconnected-prefix = " ["
-format-disconnected-suffix = "] "
+format-disconnected-prefix = "| "
+format-disconnected-suffix = " "
 ; format-packetloss = <animation-packetloss><label-connected>
-; format-packetloss-prefix = " ["
-; format-packetloss-suffix = "] "
-label-connected = "直|%essid%|%local_ip%"
+; format-packetloss-prefix = "| "
+; format-packetloss-suffix = " "
+; label-connected = "直|%essid%|%local_ip%"
+label-connected = ""
+; ramp-signal-foreground = "#1E90FF" ; blue
+ramp-signal-foreground = "#dfdedf"
 label-disconnected = "睊"
+label-disconnected-foreground = "#FF0000"
 ; label-packetloss = "%essid% %signal%"
-; ramp-signal-0 = 😱
-; ramp-signal-1 = 😠
-; ramp-signal-2 = 😒
-; ramp-signal-3 = 😊
-; ramp-signal-4 = 😃
-; ramp-signal-5 = 😈
+ramp-signal-0 = 直
+ramp-signal-1 = 直
+ramp-signal-2 = 直
+ramp-signal-3 = 直
+ramp-signal-4 = 直
+ramp-signal-5 = 直
 ; animation-packetloss-0 = ⚠
+; animation-packetloss-0-foreground =
 ; animation-packetloss-1 = 📶
 ; animation-packetloss-framerate = 500
 
-[module/wired-network]
-type=internal/network
-interface=enp60s0u1u1
-interval=1.0
-label-connected = "|%local_ip%"
-label-disconnected = ""
-format-connected-prefix = " ["
-format-connected-suffix = "] "
-format-connected = <label-connected>
-format-disconnected-prefix = " ["
-format-disconnected-suffix = "] "
-format-disconnected = <label-disconnected>
+; [module/wired-network]
+; type=internal/network
+; interface=enp60s0u1u1
+; interval=1.0
+; label-connected = "|%local_ip%"
+; label-disconnected = ""
+; format-connected-prefix = " ["
+; format-connected-suffix = "] "
+; format-connected = <label-connected>
+; format-disconnected-prefix = " ["
+; format-disconnected-suffix = "] "
+; format-disconnected = <label-disconnected>
 
 [module/network-activity]
 type=internal/network
-interval=1.0
+interval=0.5
 interface=wlan0
 accumulate-stats = true
-label-connected = "%downspeed%|||%upspeed%"
-label-disconnected = "|disconnected"
-format-connected-prefix = " ["
-format-connected-suffix = "] "
+label-connected = " %downspeed% |  %upspeed%"
+label-disconnected = " disconnected"
+format-connected-prefix = "| "
+format-connected-suffix = " "
 format-connected = <label-connected>
-format-disconnected-prefix = " ["
-format-disconnected-suffix = "] "
+format-disconnected-prefix = "| "
+format-disconnected-suffix = " "
 format-disconnected = <label-disconnected>
 
 [module/datetime]
@@ -200,7 +215,7 @@ type=internal/date
 interval=1.0
 time="%H:%M:%S"
 date="%m/%d%"
-label="[%time%|||%date%]"
+label=" %time%  |  %date% "
 
 [module/workspaces]
 type=internal/i3
@@ -220,3 +235,11 @@ label-visible-padding=2.5
 label-urgent=!
 label-urgent-padding=2.5
 pin-workspace=true
+format-suffix = "   "
+
+[module/vpn]
+type = custom/script
+exec = "/home/jake/bin/mullvad_status"
+interval = 5
+format-prefix = " "
+format-suffix = " "
