@@ -2,27 +2,22 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdbool.h>
 
-#define INVALID_INDEX -1
-#define MAX_BRIGHNESS_DIGITS 5  // "1050" + \n
-#define NUM_SETTINGS 11         // 0-100% by 10s
-#define HIGHEST_SETTING 10
-#define LOWEST_SETTING 0
+#define MAX_BRIGHNESS_DIGITS 5  // "1060" + \n
+#define MAX_VALUE 1060
+#define MIN_VALUE 0
+#define STEP_VALUE 106
 #define INCREMENT 'u'
 #define DECREMENT 'd'
 #define BRIGHTNESS_FILE_PATH \
   "/sys/class/backlight/intel_backlight/brightness"
 
+int read_current_setting(const char* file_path);
+bool write_new_setting(const char* file_path, int setting);
+int calc_new_setting(int current_setting, char operation);
 
 int main(int argc, char** argv) {
-  char* settings[NUM_SETTINGS] = {
-    "0", "106", "212", "318", "424", "530", "636", "742", "848", "954", "1060"
-  };
-  char buffer[MAX_BRIGHNESS_DIGITS + 1];  // Adds room for null terminator
-  int new_settings_idx = INVALID_INDEX,
-      current_settings_idx = INVALID_INDEX;
-  size_t len;
-
   if (argc < 2) {
     perror("Did not pass argument\n");
     return EXIT_FAILURE;
@@ -33,52 +28,68 @@ int main(int argc, char** argv) {
     return EXIT_FAILURE;
   }
 
-  FILE *f = fopen(BRIGHTNESS_FILE_PATH, "r+");
+  int current_setting = read_current_setting(BRIGHTNESS_FILE_PATH);
+  if (current_setting == -1)
+    return EXIT_FAILURE;
+
+  int new_setting = calc_new_setting(current_setting, operation);
+  if (!write_new_setting(BRIGHTNESS_FILE_PATH, new_setting))
+    return EXIT_FAILURE;
+
+  return EXIT_SUCCESS;
+}
+
+int read_current_setting(const char* file_path) {
+  char buffer[MAX_BRIGHNESS_DIGITS + 1];
+  FILE *f = fopen(file_path, "r");
+
   if (f == NULL) {
     perror("Error opening file\n");
-    return EXIT_FAILURE;
+    return -1;
   }
+
   if (fgets(buffer, sizeof(buffer), f) == NULL) {
     perror("Error reading file\n");
     fclose(f);
-    return EXIT_FAILURE;
+    return -1;
   }
-  fseek(f, 0, SEEK_SET);
-
-  len = strlen(buffer);
-  if (len > 0 && buffer[len - 1] == '\n')
-    buffer[len - 1] = '\0';
-
-  for (int i = 0; i < NUM_SETTINGS; i++) {
-    if (strcmp(settings[i], buffer) == 0) {
-      current_settings_idx = i;
-      break;
-    }
-  }
-
-  if (current_settings_idx == INVALID_INDEX) {
-    perror("Brightness does not match existing setting\n");
-    fclose(f);
-    return EXIT_FAILURE;
-  }
-
-  switch (operation) {
-    case INCREMENT:
-      new_settings_idx = (
-          current_settings_idx < HIGHEST_SETTING ? current_settings_idx + 1
-                                                 : HIGHEST_SETTING);
-      break;
-    case DECREMENT:
-      new_settings_idx = (
-          current_settings_idx > LOWEST_SETTING ? current_settings_idx - 1
-                                                : LOWEST_SETTING);
-      break;
-  }
-
-  snprintf(buffer, sizeof(buffer), "%s", settings[new_settings_idx]);
-  fprintf(f, "%s\n", buffer);
 
   fclose(f);
 
-  return EXIT_SUCCESS;
+  size_t len = strlen(buffer);
+  if (len > 0 && buffer[len - 1] == '\n')
+    buffer[len - 1] = '\0';
+
+  return atoi(buffer);
+}
+
+int calc_new_setting(int current_setting, char operation) {
+  int new_setting = current_setting;
+
+  switch (operation) {
+    case INCREMENT:
+      new_setting += STEP_VALUE;
+      if (new_setting > MAX_VALUE) new_setting = MAX_VALUE;
+      break;
+    case DECREMENT:
+      new_setting -= STEP_VALUE;
+      if (new_setting < MIN_VALUE) new_setting = MIN_VALUE;
+      break;
+  }
+
+  return new_setting;
+}
+
+bool write_new_setting(const char* file_path, int setting) {
+  FILE *f = fopen(file_path, "w");
+
+  if (f == NULL) {
+    perror("Error opening file\n");
+    return false;
+  }
+
+  fprintf(f, "%d\n", setting);
+
+  fclose(f);
+  return true;
 }
