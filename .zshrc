@@ -1,20 +1,14 @@
+echo "Welcome back, $USER!"
 export PATH=$HOME/bin:/usr/local/opt/awscli@1/bin:/Applications/Docker.app/Contents/Resources/bin/docker-compose-v1:$PATH
 export ZSH=$HOME/.oh-my-zsh
 
-if [[ $(echo $HOST | cut -d "." -f 1 | tail -c 6) == "MBP16" ]]; then
-    export ZSH_DISABLE_COMPFIX="true"
-fi
+export ZSH_DISABLE_COMPFIX="true"
 
 # pyenv
 export PYENV_ROOT="$HOME/.pyenv"
 export PATH="$PYENV_ROOT/bin:$PYENV_ROOT/shims:$PATH"
 eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
-
-# poetry
-if [[ -e "$HOME/.poetry/bin" ]]; then
-    export PATH="$HOME/.poetry/bin:$PATH"
-fi
 
 # nvm
 export NVM_DIR="$HOME/.nvm"
@@ -50,23 +44,8 @@ else
     RPROMPT='%*'
 fi
 
-# mutual aliases
-alias hs="history | grep"
-alias myip="curl http://ipecho.net/plain; echo"
-
-# device specific aliases
-if [[ $(uname -r | sed "s/[^[:alpha:]]//g") == "arch" || $(echo $HOST | cut -d "." -f 1 | tail -c 6) == "MBP16" ]]; then
-    source $HOME/.bash_aliases
-fi
-
-# built specific
-if [[ $(echo $HOST | cut -d "." -f 1 | tail -c 6) == "MBP16" ]]; then
-    export BUILT_SKIP_SERVICES=lot-management,agreements-service,accounting-service,auth-service,collateral-service,files-service,geolocations-service,payments-service,inspections-service,cla-product-api,cla-miniapp
-    export SOURCE_REPO_PATH="/Users/jake.addis/dev/integration-pipelines"
-    source "$SOURCE_REPO_PATH/integration-pipelines.zsh"
-    echo "Welcome back, $USER!"
-    # echo "$(tenure)"
-fi
+# aliases
+source $HOME/.bash_aliases
 
 # MacOS tmux-256color $TERM type
 export TERMINFO_DIRS=$TERMINFO_DIRS:$HOME/.local/share/terminfo
