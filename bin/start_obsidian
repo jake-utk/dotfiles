@@ -1,0 +1,39 @@
+#!/bin/bash
+
+VAULT="$HOME/docs/notes"
+LOG_FILE="$VAULT/.git_log_file"
+
+echo "----------------------------------------" >> "$LOG_FILE"
+echo "Script started at $(timestamp)" >> "$LOG_FILE"
+
+timestamp() {
+    date +"%Y-%m-%d %H:%M:%S"
+}
+
+echo "Changing directory to /path/to/vault" >> "$LOG_FILE"
+cd "$VAULT" || exit
+
+echo "Running git pull..." >> "$LOG_FILE"
+git pull
+
+echo "Starting Obsidian..." >> "$LOG_FILE"
+/usr/bin/obsidian
+
+echo "Obsidian closed at $(timestamp)" >> "$LOG_FILE"
+
+if [[ $(git status --porcelain) ]]; then
+    echo "Changes detected, committing to git..." >> "$LOG_FILE"
+    git add --all
+    git commit -m "Updates: $(timestamp)"
+
+    if ! git push 2>> "$LOG_FILE"; then
+        echo "Error pushing changes to git at $(timestamp)" >> "$LOG_FILE"
+        notify-send "OBSIDIAN: Git Push Error" "An error occurred while pushing changes to the Git repository."
+    else
+        echo "Changes pushed to git at $(timestamp)" >> "$LOG_FILE"
+    fi
+else
+    echo "No changes detected, no commit needed." >> "$LOG_FILE"
+fi
+
+echo "Script ended at $(timestamp)" >> "$LOG_FILE"
