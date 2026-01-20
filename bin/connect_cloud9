@@ -1,0 +1,56 @@
+#!/bin/bash
+# Ensures SSO for profile "dim", sets region/profile, wakes Cloud9 EC2, then SSHs via alias.
+
+set -euo pipefail
+
+PROFILE="dim"
+REGION="us-east-2"
+INSTANCE_ID="i-0731f39127dec7f02"
+AWS="aws --profile $PROFILE --region $REGION"
+
+echo "☁️ Connecting to AWS Cloud9 ☁️ "
+echo "🔐 Checking AWS SSO session for profile: $PROFILE..."
+if ! $AWS sts get-caller-identity >/dev/null 2>&1; then
+  echo "👉 No valid SSO session. Logging in to $PROFILE..."
+  aws sso login --profile "$PROFILE"
+  $AWS sts get-caller-identity >/dev/null
+fi
+echo "✅ SSO session is valid."
+
+echo "🔍 Checking instance state for $INSTANCE_ID..."
+STATE=$($AWS ec2 describe-instances \
+  --instance-ids "$INSTANCE_ID" \
+  --query "Reservations[0].Instances[0].State.Name" \
+  --output text)
+
+case "$STATE" in
+  running)
+    echo "✅ Instance already running."
+    ;;
+  stopped)
+    echo "⚡ Instance is stopped — starting..."
+    $AWS ec2 start-instances --instance-ids "$INSTANCE_ID" >/dev/null
+    echo "⏳ Waiting for instance to be running..."
+    $AWS ec2 wait instance-running --instance-ids "$INSTANCE_ID"
+    echo "✅ Instance started."
+    ;;
+  pending)
+    echo "⏳ Instance is pending — waiting for running..."
+    $AWS ec2 wait instance-running --instance-ids "$INSTANCE_ID"
+    echo "✅ Instance is running."
+    ;;
+  stopping)
+    echo "⏳ Instance is stopping — waiting to fully stop, then starting..."
+    $AWS ec2 wait instance-stopped --instance-ids "$INSTANCE_ID"
+    $AWS ec2 start-instances --instance-ids "$INSTANCE_ID" >/dev/null
+    $AWS ec2 wait instance-running --instance-ids "$INSTANCE_ID"
+    echo "✅ Instance started."
+    ;;
+  *)
+    echo "❌ Instance is in state: $STATE (cannot auto-start)."
+    exit 1
+    ;;
+esac
+
+echo "🔐 Connecting via SSH..."
+ssh cloud9

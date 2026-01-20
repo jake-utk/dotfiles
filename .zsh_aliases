@@ -1,0 +1,21 @@
+# Add sanity checks
+alias rm="rm -i"
+alias cp="cp -i"
+alias mv="mv -i"
+
+# Access dotfiles worktree
+alias dotfiles="/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME"
+
+# Better status output
+alias dps='docker ps --format "{{.Names}} => [{{.Status}}]"'
+
+# Enforce 256 colors
+alias tmux="tmux -2"
+
+# Regenerate brew dump for git tracking
+alias dump_brewfile="rm ~/.brewfile && brew bundle dump --file=~/.brewfile"
+
+# Built specific
+alias cache="ls $HOME/.built_cache | grep"
+alias gpg_old='/usr/local/opt/gnupg@2.2/bin/gpg '
+alias assume=". assume"

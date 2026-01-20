@@ -1,0 +1,21 @@
+[user]
+	name = Jake Addis
+	email = jake.addis@getbuilt.com
+[merge]
+    tool = vimdiff
+[core]
+    editor = vim
+    pager = less -FRX
+[color]
+    ui = auto
+[alias]
+    logd = "log --pretty=format:'%h %ad | %s' -n 10"
+    st = "status -sb"
+    alias = "config --get-regexp ^alias\\."
+    date-commit = "!f() { GIT_AUTHOR_DATE=\"$1\" GIT_COMMITTER_DATE=\"$1\" git commit -m \"$2\"; }; f"
+    date-commit-no-verify = "!f() { GIT_AUTHOR_DATE=\"$1\" GIT_COMMITTER_DATE=\"$1\" git commit -m \"$2\" --no-verify; }; f"
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
